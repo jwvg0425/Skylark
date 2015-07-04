@@ -28,6 +28,10 @@ namespace skylark
 
 		long getLockFlag() const { return lockFlag; }
 
+		//compare by order
+		bool operator <(const Lock& rhs);
+		bool operator >(const Lock& rhs);
+
 	private:
 
 		enum LockFlag
