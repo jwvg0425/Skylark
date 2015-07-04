@@ -41,6 +41,9 @@
     <ClInclude Include="Socket.h">
       <Filter>소스 파일\network</Filter>
     </ClInclude>
+    <ClInclude Include="Lock.h">
+      <Filter>소스 파일\utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -51,6 +54,9 @@
     </ClCompile>
     <ClCompile Include="Socket.cpp">
       <Filter>소스 파일\network</Filter>
+    </ClCompile>
+    <ClCompile Include="Lock.cpp">
+      <Filter>소스 파일\utility</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
