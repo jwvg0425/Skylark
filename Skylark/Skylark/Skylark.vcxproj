@@ -73,9 +73,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Lock.h" />
     <ClInclude Include="LockOrderChecker.h" />
+    <ClInclude Include="Port.h" />
     <ClInclude Include="Skylark.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="stdafx.h" />
@@ -84,9 +86,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="CircularBuffer.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Lock.cpp" />
     <ClCompile Include="LockOrderChecker.cpp" />
+    <ClCompile Include="Port.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

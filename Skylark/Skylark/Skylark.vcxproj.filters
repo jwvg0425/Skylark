@@ -24,6 +24,12 @@
     <Filter Include="소스 파일\thread">
       <UniqueIdentifier>{8f05a5b4-a30b-4bcd-ab25-3024df08a278}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\global">
+      <UniqueIdentifier>{ed108aa7-22d4-4f5c-845b-b553189fe89e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\global\manager">
+      <UniqueIdentifier>{a799fb3d-b4c8-4b30-b975-9218dbcb95f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -56,6 +62,12 @@
     <ClInclude Include="Exception.h">
       <Filter>소스 파일\utility</Filter>
     </ClInclude>
+    <ClInclude Include="Port.h">
+      <Filter>소스 파일\network</Filter>
+    </ClInclude>
+    <ClInclude Include="CircularBuffer.h">
+      <Filter>소스 파일\utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -77,6 +89,12 @@
       <Filter>소스 파일\thread</Filter>
     </ClCompile>
     <ClCompile Include="Exception.cpp">
+      <Filter>소스 파일\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Port.cpp">
+      <Filter>소스 파일\network</Filter>
+    </ClCompile>
+    <ClCompile Include="CircularBuffer.cpp">
       <Filter>소스 파일\utility</Filter>
     </ClCompile>
   </ItemGroup>
