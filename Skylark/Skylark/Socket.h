@@ -11,18 +11,18 @@ namespace skylark
 		UDP
 	};
 
-	enum class SocketOption
-	{
-		REUSE_ADDR
-	};
-
 	class Socket
 	{
 	public:
 		Socket(ConnectType type);
 		~Socket();
 
-		void setOption(SocketOption option);
+		bool reuseAddr(bool reuse);
+		bool setLinger(bool lingerOn, int lingerTime);
+		bool updateAcceptContext(Socket* s);
+		bool setNodelay(bool nodelay);
+		bool setReceiveBufferSize(int size);
+
 		bool completeTo(Port* port);
 
 		bool bind(const std::string& addr, std::uint16_t port);
@@ -33,7 +33,17 @@ namespace skylark
 		{
 			static_assert(std::is_base_of(C, Context));
 
-			return false;
+			if (FALSE == disconnectEx_(socket, (LPWSAOVERLAPPED)context, TF_REUSE_SOCKET, 0))
+			{
+				if (WSAGetLastError() != WSA_IO_PENDING)
+				{
+					delete context;
+
+					return false;
+				}
+			}
+
+			return true;
 		}
 		
 		template<typename C>
@@ -41,7 +51,17 @@ namespace skylark
 		{
 			static_assert(std::is_base_of(C, Context));
 
-			return false;
+			if (FALSE == acceptEx_(listenSocket->socket, socket, acceptBuf, 0,
+				sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, &bytes, (LPOVERLAPPED)context))
+			{
+				if (WSAGetLastError() != WSA_IO_PENDING)
+				{
+					delete context;
+
+					return false;
+				}
+			}
+			return true;
 		}
 
 		template<typename C>
@@ -49,10 +69,28 @@ namespace skylark
 		{
 			static_assert(std::is_base_of(C, Context));
 
-			return false;
+			SOCKADDR_IN serverSockAddr = { 0, };
+
+			serverSockAddr.sin_port = htons(port);
+			serverSockAddr.sin_family = AF_INET;
+			serverSockAddr.sin_addr.s_addr = inet_addr(addr.c_str());
+
+			if (FALSE == connectEx_(socket, (sockaddr*)&serverSockAddr, sizeof(SOCKADDR_IN),
+				nullptr, 0, nullptr, (LPWSAOVERLAPPED)context))
+			{
+				if (WSAGetLastError() != WSA_IO_PENDING)
+				{
+					delete context;
+
+					return false;
+				}
+			}
+
+			return true;
 		}
 	
 	private:
+		static char acceptBuf[64];
 		SOCKET socket;
 		bool bindToPort = false;
 	};
