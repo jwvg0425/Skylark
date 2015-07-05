@@ -68,6 +68,9 @@
     <ClInclude Include="CircularBuffer.h">
       <Filter>소스 파일\utility</Filter>
     </ClInclude>
+    <ClInclude Include="Context.h">
+      <Filter>소스 파일\network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -96,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="CircularBuffer.cpp">
       <Filter>소스 파일\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Context.cpp">
+      <Filter>소스 파일\network</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

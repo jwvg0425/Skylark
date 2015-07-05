@@ -74,6 +74,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="CircularBuffer.h" />
+    <ClInclude Include="Context.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Lock.h" />
     <ClInclude Include="LockOrderChecker.h" />
@@ -87,6 +88,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="CircularBuffer.cpp" />
+    <ClCompile Include="Context.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Lock.cpp" />
     <ClCompile Include="LockOrderChecker.cpp" />
