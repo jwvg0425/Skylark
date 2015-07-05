@@ -3,7 +3,7 @@
 namespace skylark
 {
 	class Port;
-	class Context;
+	struct Context;
 
 	enum class ConnectType
 	{
