@@ -71,6 +71,9 @@
     <ClInclude Include="Context.h">
       <Filter>소스 파일\network</Filter>
     </ClInclude>
+    <ClInclude Include="IOThread.h">
+      <Filter>소스 파일\thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -102,6 +105,9 @@
     </ClCompile>
     <ClCompile Include="Context.cpp">
       <Filter>소스 파일\network</Filter>
+    </ClCompile>
+    <ClCompile Include="IOThread.cpp">
+      <Filter>소스 파일\thread</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

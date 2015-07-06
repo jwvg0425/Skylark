@@ -29,6 +29,7 @@
 #include <iostream>
 #include <sstream>
 #include <functional>
+#include <thread>
 
 #include <ppl.h>
 #include <concurrent_queue.h>

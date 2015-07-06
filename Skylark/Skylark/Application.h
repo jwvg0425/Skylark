@@ -8,7 +8,8 @@ namespace skylark
 		Application();
 		~Application();
 
-		int run();
+		virtual int run();
+		virtual void init() = 0;
 
 	private:
 	};
