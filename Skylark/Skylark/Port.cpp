@@ -3,7 +3,8 @@
 #include "Exception.h"
 #include "Context.h"
 
-skylark::Port::Port()
+skylark::Port::Port(int timeout_)
+	:timeout(timeout_)
 {
 	completionPort = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, 0, 0);
 	CRASH_ASSERT(completionPort != NULL);
@@ -14,21 +15,21 @@ skylark::Port::~Port()
 	CloseHandle(completionPort);
 }
 
-void skylark::Port::job(int timeout)
+void skylark::Port::job()
 {
 	DWORD transferred = 0;
-	LPOVERLAPPED overlapped = nullptr;
+	Overlapped* overlapped = nullptr;
 
 	ULONG_PTR completionKey = 0;
 
-	int ret = GetQueuedCompletionStatus(completionPort, &transferred, (PULONG_PTR)&completionKey, &overlapped, timeout);
+	int ret = GetQueuedCompletionStatus(completionPort, &transferred, (PULONG_PTR)&completionKey, (LPOVERLAPPED*)&overlapped, timeout);
 
-	Context* context = reinterpret_cast<Context*>(overlapped);
+	Context* context = overlapped == nullptr? nullptr : overlapped->context;
 
 	if (ret == 0 || transferred == 0)
 	{
 		//check timeout
-		if (context == nullptr && GetLastError() == WAIT_TIMEOUT)
+		if (overlapped == nullptr && GetLastError() == WAIT_TIMEOUT)
 			return;
 	}
 	
@@ -39,7 +40,7 @@ void skylark::Port::job(int timeout)
 		context->onFailure();
 	}
 
-	delete context;
+	delete overlapped;
 }
 
 bool skylark::Port::bind(SOCKET socket)
@@ -56,7 +57,9 @@ bool skylark::Port::bind(SOCKET socket)
 
 bool skylark::Port::take(Context * context, int key)
 {
-	return PostQueuedCompletionStatus(completionPort, 0, (ULONG_PTR)key, (LPOVERLAPPED)context) == TRUE;
+	Overlapped* overlapped = new Overlapped(context);
+
+	return PostQueuedCompletionStatus(completionPort, 0, (ULONG_PTR)key, overlapped) == TRUE;
 }
 
 bool skylark::postContext(Port * port, Context * context, int key)

@@ -8,15 +8,16 @@ namespace skylark
 	class Port
 	{
 	public:
-		Port();
+		Port(int timeout_);
 		~Port();
 
-		void job(int timeout);
+		void job();
 		bool bind(SOCKET socket);
 
 		bool take(Context* context, int key);
 	private:
 		HANDLE completionPort;
+		int timeout;
 	};
 
 	bool postContext(Port* port, Context* context, int key);
