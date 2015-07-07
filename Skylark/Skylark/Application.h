@@ -6,10 +6,10 @@ namespace skylark
 	{
 	public:
 		Application();
-		~Application();
+		virtual ~Application();
 
 		virtual int run();
-		virtual void init() = 0;
+		virtual bool init() = 0;
 
 	private:
 	};
