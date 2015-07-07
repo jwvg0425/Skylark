@@ -7,18 +7,18 @@ namespace skylark
 	class IOThread
 	{
 	public:
-		explicit IOThread(int id_, Port* port_, std::function<void()> customFunc_);
+		explicit IOThread(int id_, Port* port_, std::function<void()> customFunc);
+		explicit IOThread(int id_, Port* port_);
 		virtual ~IOThread();
 
 		virtual void sendJob();
 		virtual void init();
 
-		int run();
+		virtual int run();
 
 	private:
 		int id;
 		Port* port;
-		std::function<void()> customFunc;
 		std::thread t;
 	};
 }
