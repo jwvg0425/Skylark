@@ -17,5 +17,13 @@ bool skylark::RecvContext::onComplete(int transferred, int key)
 	if(transferred == 0)
 		return false;
 
-	return session->onRead();
+	return session->recvCompletion(transferred);
+}
+
+bool skylark::SendContext::onComplete(int transferred, int key)
+{
+	if (transferred == 0)
+		return false;
+
+	return session->sendCompletion(transferred);
 }

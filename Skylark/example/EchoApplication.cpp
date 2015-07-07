@@ -1,4 +1,5 @@
 #include "EchoApplication.h"
+#include "EchoSession.h"
 
 EchoApplication::EchoApplication(int threadNum_)
 	: threadNum(threadNum_)
@@ -14,7 +15,7 @@ int EchoApplication::run()
 	//100 clients accept
 	for (int i = 0; i < 100; i++)
 	{
-		skylark::Session* session = new skylark::Session(mainPort, 4096, 4096);
+		EchoSession* session = new EchoSession(mainPort, 4096, 4096);
 		skylark::AcceptContext* context = new skylark::AcceptContext(session, listen);
 
 		session->accept(listen, context);
@@ -36,6 +37,7 @@ bool EchoApplication::init()
 {
 	mainPort = new skylark::Port(10);
 	listen = new skylark::Socket(skylark::ConnectType::TCP);
+
 	if (!listen->completeTo(mainPort))
 		return false;
 

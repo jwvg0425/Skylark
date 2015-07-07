@@ -2,6 +2,7 @@
 #include "Session.h"
 #include "Socket.h"
 #include "Context.h"
+#include "ThreadLocal.h"
 
 skylark::Session::Session(Port * port_, std::size_t sendBufSize, std::size_t recvBufSize)
 	:socket(new Socket(ConnectType::TCP)), port(port_), sendBuffer(sendBufSize), recvBuffer(recvBufSize), sendLock(Lock::Order::LUGGAGE_CLASS)
@@ -90,12 +91,76 @@ bool skylark::Session::onRead()
 	return false;
 }
 
-bool skylark::Session::send(std::int8_t * packet, std::size_t len)
+bool skylark::Session::onSend()
 {
 	return false;
 }
 
+bool skylark::Session::sendCompletion(DWORD transferred)
+{
+	Guard guard(sendLock, true);
+
+	sendBuffer.remove(transferred);
+	sendPendingCount--;
+
+	return onSend();
+}
+
+bool skylark::Session::recvCompletion(DWORD transferred)
+{
+	recvBuffer.commit(transferred);
+
+	return onRead();
+}
+
+bool skylark::Session::send(std::int8_t * packet, std::size_t len)
+{
+	Guard guard(sendLock, true);
+
+	if (sendBuffer.getFreeSpaceSize() < len)
+		return false;
+
+	TLS::sendRequestSessionList->push_back(this);
+
+	auto destData = sendBuffer.getBuffer();
+
+	memcpy(destData, packet, len);
+
+	sendBuffer.commit(len);
+
+	return true;
+}
+
 bool skylark::Session::flushSend()
 {
-	return false;
+	if (0 == sendBuffer.getContiguiousBytes())
+	{
+		if (0 == sendPendingCount)
+			return true;
+
+		return false;
+	}
+
+	if(sendPendingCount > 0)
+		return false;
+
+	Guard guard(sendLock, true);
+
+	SendContext* context = new SendContext(this);
+
+	DWORD sendbytes = 0;
+	DWORD flags = 0;
+
+	context->wsabuf.len = (ULONG)sendBuffer.getContiguiousBytes();
+	context->wsabuf.buf = (char*)sendBuffer.getBufferStart();
+
+	if (!socket->send(context, context->wsabuf))
+	{
+		//disconnect
+		return true;
+	}
+
+	sendPendingCount++;
+
+	return sendPendingCount == 1;
 }

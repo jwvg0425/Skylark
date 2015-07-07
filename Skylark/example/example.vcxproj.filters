@@ -21,9 +21,15 @@
     <ClCompile Include="EchoApplication.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="EchoSession.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EchoApplication.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EchoSession.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

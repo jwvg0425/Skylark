@@ -28,11 +28,15 @@ namespace skylark
 
 		virtual bool onAccept(Socket* listen);
 		virtual bool onRead();
+		virtual bool onSend();
+
+		bool sendCompletion(DWORD transferred);
+		bool recvCompletion(DWORD transferred);
 
 		virtual bool send(std::int8_t* packet, std::size_t len);
 		virtual bool flushSend();
 
-	private:
+	protected:
 		Port* port;
 		Socket* socket = nullptr;
 		CircularBuffer sendBuffer;

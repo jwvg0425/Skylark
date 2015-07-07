@@ -66,6 +66,23 @@ namespace skylark
 		WSABUF wsabuf;
 	};
 
+	struct SendContext : Context
+	{
+		SendContext(Session* session_)
+			:session(session_) {}
+		~SendContext() override = default;
+
+		bool onComplete(int transferred, int key) override;
+
+		bool onFailure() override
+		{
+			return false;
+		}
+
+		Session* session;
+		WSABUF wsabuf;
+	};
+
 	struct Overlapped : OVERLAPPED
 	{
 		Overlapped(Context* context_) : context(context_)

@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "Lock.h"
 
 namespace skylark
 {
@@ -97,7 +98,7 @@ namespace skylark
 		}
 
 		template<typename C>
-		bool recv(C* context, WSABUF buf)
+		bool recv(C* context, WSABUF& buf)
 		{
 			static_assert(std::is_base_of<Context, C>::value, "context must be Context's derived type.");
 
@@ -110,6 +111,28 @@ namespace skylark
 				if (WSAGetLastError() != WSA_IO_PENDING)
 				{
 					delete overlapped;
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		template<typename C>
+		bool send(C* context, WSABUF& buf)
+		{
+			static_assert(std::is_base_of<Context, C>::value, "context must be Context's derived type.");
+
+			Overlapped* overlapped = new Overlapped(context);
+			DWORD sendbytes = 0;
+			DWORD flags = 0;
+
+			if (SOCKET_ERROR == WSASend(socket, &buf, 1, &sendbytes, flags, overlapped, nullptr))
+			{
+				if (WSAGetLastError() != WSA_IO_PENDING)
+				{
+					delete overlapped;
+
 					return false;
 				}
 			}
