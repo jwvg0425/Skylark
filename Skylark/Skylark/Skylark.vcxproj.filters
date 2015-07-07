@@ -74,6 +74,9 @@
     <ClInclude Include="IOThread.h">
       <Filter>소스 파일\thread</Filter>
     </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>소스 파일\network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -108,6 +111,9 @@
     </ClCompile>
     <ClCompile Include="IOThread.cpp">
       <Filter>소스 파일\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>소스 파일\network</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

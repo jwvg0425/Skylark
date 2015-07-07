@@ -5,7 +5,7 @@ namespace skylark
 	struct Context
 	{
 		Context() = default;
-		~Context() = default;
+		virtual ~Context() = default;
 
 		virtual bool onComplete(int transferred, int key) = 0;
 		

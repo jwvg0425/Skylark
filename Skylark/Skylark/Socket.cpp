@@ -47,6 +47,8 @@ namespace skylark
 		}
 	};
 
+	SocketInitializer initializer;
+
 	Socket::Socket(ConnectType type)
 	{
 		switch (type)
@@ -71,7 +73,7 @@ namespace skylark
 	{
 		int opt = reuse ? 1 : 0;
 
-		return SOCKET_ERROR == setsockopt(socket, SOL_SOCKET, SO_REUSEADDR, (const char*)&opt, sizeof(int));
+		return SOCKET_ERROR != setsockopt(socket, SOL_SOCKET, SO_REUSEADDR, (const char*)&opt, sizeof(int));
 	}
 
 	bool Socket::setLinger(bool lingerOn, int lingerTime)
@@ -80,23 +82,23 @@ namespace skylark
 		lingerOption.l_onoff = lingerOn ? 1 : 0;
 		lingerOption.l_linger = lingerTime;
 
-		return SOCKET_ERROR == setsockopt(socket, SOL_SOCKET, SO_LINGER, (const char*)&lingerOption, sizeof(LINGER));
+		return SOCKET_ERROR != setsockopt(socket, SOL_SOCKET, SO_LINGER, (const char*)&lingerOption, sizeof(LINGER));
 	}
 
 	bool Socket::updateAcceptContext(Socket * s)
 	{
-		return SOCKET_ERROR == setsockopt(socket, SOL_SOCKET, SO_UPDATE_ACCEPT_CONTEXT, (char*)&s->socket, sizeof(SOCKET));
+		return SOCKET_ERROR != setsockopt(socket, SOL_SOCKET, SO_UPDATE_ACCEPT_CONTEXT, (char*)&s->socket, sizeof(SOCKET));
 	}
 
 	bool Socket::setNodelay(bool nodelay)
 	{
 		int opt = nodelay ? 1 : 0;
-		return SOCKET_ERROR == setsockopt(socket, IPPROTO_TCP, TCP_NODELAY, (const char*)&opt, sizeof(int));
+		return SOCKET_ERROR != setsockopt(socket, IPPROTO_TCP, TCP_NODELAY, (const char*)&opt, sizeof(int));
 	}
 
 	bool Socket::setReceiveBufferSize(int size)
 	{
-		return SOCKET_ERROR == setsockopt(socket, SOL_SOCKET, SO_RCVBUF, (const char*)&size, sizeof(int));
+		return SOCKET_ERROR != setsockopt(socket, SOL_SOCKET, SO_RCVBUF, (const char*)&size, sizeof(int));
 	}
 
 	bool Socket::completeTo(Port * port)
@@ -114,16 +116,11 @@ namespace skylark
 		serveraddr.sin_port = htons(port);
 		serveraddr.sin_addr.s_addr = inet_addr(addr.c_str());
 
-		if (SOCKET_ERROR == ::bind(socket, (SOCKADDR*)&serveraddr, sizeof(serveraddr)))
-		{
-			return false;
-		}
-
-		return true;
+		return SOCKET_ERROR != ::bind(socket, (SOCKADDR*)&serveraddr, sizeof(serveraddr));
 	}
 
 	bool Socket::listen()
 	{
-		return false;
+		return SOCKET_ERROR != ::listen(socket, SOMAXCONN);
 	}
 }

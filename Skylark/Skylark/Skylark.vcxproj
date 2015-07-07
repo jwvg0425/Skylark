@@ -79,6 +79,7 @@
     <ClInclude Include="Lock.h" />
     <ClInclude Include="LockOrderChecker.h" />
     <ClInclude Include="Port.h" />
+    <ClInclude Include="Session.h" />
     <ClInclude Include="Skylark.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="stdafx.h" />
@@ -94,6 +95,7 @@
     <ClCompile Include="Lock.cpp" />
     <ClCompile Include="LockOrderChecker.cpp" />
     <ClCompile Include="Port.cpp" />
+    <ClCompile Include="Session.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
