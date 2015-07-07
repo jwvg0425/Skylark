@@ -11,6 +11,10 @@ namespace skylark
 		UDP
 	};
 
+	extern LPFN_DISCONNECTEX disconnectEx_;
+	extern LPFN_ACCEPTEX acceptEx_;
+	extern LPFN_CONNECTEX connectEx_;
+
 	class Socket
 	{
 	public:
@@ -49,14 +53,17 @@ namespace skylark
 		template<typename C>
 		bool acceptEx(Socket* listenSocket, C* context)
 		{
-			static_assert(std::is_base_of(C, Context));
+			static_assert(std::is_base_of<Context, C>::value, "context must be Context's derived type.");
+
+			DWORD bytes = 0;
+			Overlapped* overlapped = new Overlapped(context);
 
 			if (FALSE == acceptEx_(listenSocket->socket, socket, acceptBuf, 0,
-				sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, &bytes, (LPOVERLAPPED)context))
+				sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, &bytes, overlapped))
 			{
 				if (WSAGetLastError() != WSA_IO_PENDING)
 				{
-					delete context;
+					delete overlapped;
 
 					return false;
 				}

@@ -15,8 +15,18 @@ namespace skylark
 
 		void disconnect(int reason);
 
+		template<typename C>
+		bool accept(Socket* listen, C* context)
+		{
+			static_assert(std::is_base_of<Context ,C>::value, "context must be Context's derived type.");
+
+			return socket->acceptEx(listen, context);
+		}
+
 		bool preRecv();
 		bool recv();
+
+		virtual bool onAccept(Socket* listen);
 
 		virtual bool send(std::int8_t* packet, std::size_t len);
 		virtual bool flushSend();

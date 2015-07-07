@@ -12,6 +12,25 @@ namespace skylark
 		//call when onComplete return false
 		virtual bool onFailure() = 0;
 	};
+	
+	class Session;
+	class Socket;
+
+	struct AcceptContext : Context
+	{
+		AcceptContext(Session* session_, Socket* listen_) : session(session_), listen(listen_) {}
+		virtual ~AcceptContext() = default;
+
+		virtual bool onComplete(int transferred, int key);
+
+		virtual bool onFailure()
+		{
+			return false;
+		}
+
+		Session* session;
+		Socket* listen;
+	};
 
 	struct Overlapped : OVERLAPPED
 	{

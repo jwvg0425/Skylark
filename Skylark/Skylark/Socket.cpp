@@ -10,6 +10,8 @@ namespace skylark
 	LPFN_DISCONNECTEX disconnectEx_ = nullptr;
 	LPFN_ACCEPTEX acceptEx_ = nullptr;
 	LPFN_CONNECTEX connectEx_ = nullptr;
+	char Socket::acceptBuf[64] = { 0, };
+
 
 	struct SocketInitializer
 	{
