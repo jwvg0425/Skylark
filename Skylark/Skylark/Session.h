@@ -27,6 +27,7 @@ namespace skylark
 		bool recv();
 
 		virtual bool onAccept(Socket* listen);
+		virtual bool onRead();
 
 		virtual bool send(std::int8_t* packet, std::size_t len);
 		virtual bool flushSend();

@@ -19,17 +19,51 @@ namespace skylark
 	struct AcceptContext : Context
 	{
 		AcceptContext(Session* session_, Socket* listen_) : session(session_), listen(listen_) {}
-		virtual ~AcceptContext() = default;
+		~AcceptContext() override = default;
 
-		virtual bool onComplete(int transferred, int key);
+		bool onComplete(int transferred, int key) override;
 
-		virtual bool onFailure()
+		bool onFailure() override
 		{
 			return false;
 		}
 
 		Session* session;
 		Socket* listen;
+	};
+
+	struct PreRecvContext : Context
+	{
+		PreRecvContext(Session* session_)
+			:session(session_) {}
+		~PreRecvContext() override = default;
+
+		bool onComplete(int transferred, int key) override;
+		
+		bool onFailure() override
+		{
+			return false;
+		}
+
+		Session* session;
+		WSABUF wsabuf;
+	};
+
+	struct RecvContext : Context
+	{
+		RecvContext(Session* session_)
+			:session(session_) {}
+		~RecvContext() override = default;
+
+		bool onComplete(int transferred, int key) override;
+
+		bool onFailure() override
+		{
+			return false;
+		}
+
+		Session* session;
+		WSABUF wsabuf;
 	};
 
 	struct Overlapped : OVERLAPPED

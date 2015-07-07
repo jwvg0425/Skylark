@@ -95,6 +95,27 @@ namespace skylark
 
 			return true;
 		}
+
+		template<typename C>
+		bool recv(C* context, WSABUF buf)
+		{
+			static_assert(std::is_base_of<Context, C>::value, "context must be Context's derived type.");
+
+			DWORD recvBytes = 0;
+			DWORD flags = 0;
+
+			Overlapped* overlapped = new skylark::Overlapped(context);
+			if (SOCKET_ERROR == WSARecv(socket, &buf, 1, &recvBytes, &flags, overlapped, nullptr))
+			{
+				if (WSAGetLastError() != WSA_IO_PENDING)
+				{
+					delete overlapped;
+					return false;
+				}
+			}
+
+			return true;
+		}
 	
 	private:
 		static char acceptBuf[64];
