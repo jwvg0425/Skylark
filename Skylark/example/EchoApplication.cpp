@@ -11,10 +11,23 @@ EchoApplication::~EchoApplication()
 
 int EchoApplication::run()
 {
+	//100 clients accept
+	for (int i = 0; i < 100; i++)
+	{
+		skylark::Session* session = new skylark::Session(mainPort, 4096, 4096);
+		skylark::AcceptContext* context = new skylark::AcceptContext(session, listen);
+
+		session->accept(listen, context);
+	}
+
+	printf("start server...\n");
+
 	for (auto thread : threads)
 	{
 		thread->run();
 	}
+
+	printf("end server...\n");
 
 	return 0;
 }
@@ -37,7 +50,7 @@ bool EchoApplication::init()
 
 	for (int i = 0; i < 4; i++)
 	{
-		auto thread = new skylark::IOThread(i, mainPort, [] {});
+		auto thread = new skylark::IOThread(i, mainPort);
 
 		threads.push_back(thread);
 	}
