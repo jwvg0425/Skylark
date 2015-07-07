@@ -1,9 +1,14 @@
-﻿#include "Skylark.h"
-
+﻿#include "EchoApplication.h"
 
 int main()
 {
-	skylark::Application app;
+	EchoApplication app(4);
+
+	if (!app.init())
+	{
+		printf("app init error.");
+		return -1;
+	}
 
 	return app.run();
 }
