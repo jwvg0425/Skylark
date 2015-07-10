@@ -36,13 +36,15 @@ namespace skylark
 		template<typename C>
 		bool disconnectEx(C* context)
 		{
-			static_assert(std::is_base_of(C, Context));
+			static_assert(std::is_base_of<Context, C>::value, "context must be Context's derived type.");
 
-			if (FALSE == disconnectEx_(socket, (LPWSAOVERLAPPED)context, TF_REUSE_SOCKET, 0))
+			Overlapped* overlapped = new Overlapped(context);
+
+			if (FALSE == disconnectEx_(socket, overlapped, TF_REUSE_SOCKET, 0))
 			{
 				if (WSAGetLastError() != WSA_IO_PENDING)
 				{
-					delete context;
+					delete overlapped;
 
 					return false;
 				}
@@ -83,12 +85,14 @@ namespace skylark
 			serverSockAddr.sin_family = AF_INET;
 			serverSockAddr.sin_addr.s_addr = inet_addr(addr.c_str());
 
+			Overlapped* overlapped = new Overlapped(context);
+
 			if (FALSE == connectEx_(socket, (sockaddr*)&serverSockAddr, sizeof(SOCKADDR_IN),
-				nullptr, 0, nullptr, (LPWSAOVERLAPPED)context))
+				nullptr, 0, nullptr, overlapped))
 			{
 				if (WSAGetLastError() != WSA_IO_PENDING)
 				{
-					delete context;
+					delete overlapped;
 
 					return false;
 				}

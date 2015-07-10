@@ -5,33 +5,40 @@
 #include "Port.h"
 #include "Session.h"
 
-skylark::IOThread::IOThread(int id_, Port* port_, std::function<void()> customFunc) :
-	id(id_), port(port_), t([this, customFunc]()
+namespace skylark
+{
+	void ioThreadFunc(IOThread* thread)
 	{
-		init();
+		thread->init();
 
 		while (true)
 		{
-			port->job();
-			sendJob();
-			customFunc();
+			thread->ioJob();
+			thread->sendJob();
+			thread->customJob();
 		}
-	})
+	}
+}
+
+void skylark::IOThread::ioJob()
+{
+	port->job();
+}
+
+void skylark::IOThread::customJob()
+{
+	if (customFunc != nullptr)
+		customFunc();
+}
+
+skylark::IOThread::IOThread(int id_, Port* port_, std::function<void()> customFunc_) :
+	id(id_), port(port_), customFunc(customFunc_), t(ioThreadFunc, this)
 {
 
 }
 
 skylark::IOThread::IOThread(int id_, Port * port_)
-	:id(id_), port(port_), t([this]()
-	{
-		init();
-
-		while (true)
-		{
-			port->job();
-			sendJob();
-		}
-	})
+	:id(id_), port(port_), customFunc(nullptr), t(ioThreadFunc, this)
 {
 }
 
@@ -58,7 +65,7 @@ void skylark::IOThread::init()
 	TLS::sendRequestSessionList = new std::deque<Session*>();
 }
 
-int skylark::IOThread::run()
+int skylark::IOThread::wait()
 {
 	t.join();
 

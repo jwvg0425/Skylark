@@ -15,7 +15,7 @@ skylark::Port::~Port()
 	CloseHandle(completionPort);
 }
 
-void skylark::Port::job()
+void skylark::Port::job() const
 {
 	DWORD transferred = 0;
 	Overlapped* overlapped = nullptr;
@@ -24,7 +24,7 @@ void skylark::Port::job()
 
 	int ret = GetQueuedCompletionStatus(completionPort, &transferred, (PULONG_PTR)&completionKey, (LPOVERLAPPED*)&overlapped, timeout);
 
-	Context* context = overlapped == nullptr? nullptr : overlapped->context;
+	Context* context = (overlapped == nullptr)? nullptr : overlapped->context;
 
 	if (ret == 0 || transferred == 0)
 	{
@@ -32,7 +32,7 @@ void skylark::Port::job()
 		if (overlapped == nullptr && GetLastError() == WAIT_TIMEOUT)
 			return;
 	}
-	
+
 	bool completionOk = context->onComplete(transferred, completionKey);
 
 	if (!completionOk)

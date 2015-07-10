@@ -57,10 +57,7 @@ namespace skylark
 
 		bool onComplete(int transferred, int key) override;
 
-		bool onFailure() override
-		{
-			return false;
-		}
+		bool onFailure() override;
 
 		Session* session;
 		WSABUF wsabuf;
@@ -74,13 +71,27 @@ namespace skylark
 
 		bool onComplete(int transferred, int key) override;
 
+		bool onFailure() override;
+
+		Session* session;
+		WSABUF wsabuf;
+	};
+
+	struct DisconnectContext : Context
+	{
+		DisconnectContext(Session* session_, int reason_)
+			:session(session), reason(reason_) {}
+		~DisconnectContext() override = default;
+
+		bool onComplete(int transferred, int key) override;
+
 		bool onFailure() override
 		{
 			return false;
 		}
 
 		Session* session;
-		WSABUF wsabuf;
+		int reason;
 	};
 
 	struct Overlapped : OVERLAPPED

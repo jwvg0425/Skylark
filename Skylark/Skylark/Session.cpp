@@ -3,9 +3,10 @@
 #include "Socket.h"
 #include "Context.h"
 #include "ThreadLocal.h"
+#include "Exception.h"
 
 skylark::Session::Session(Port * port_, std::size_t sendBufSize, std::size_t recvBufSize)
-	:socket(new Socket(ConnectType::TCP)), port(port_), sendBuffer(sendBufSize), recvBuffer(recvBufSize), sendLock(Lock::Order::LUGGAGE_CLASS)
+	:socket(new Socket(ConnectType::TCP)), port(port_), sendBuffer(sendBufSize), recvBuffer(recvBufSize), sendLock(Lock::Order::LUGGAGE_CLASS), connected(false)
 {
 }
 
@@ -14,12 +15,16 @@ skylark::Session::~Session()
 	delete socket;
 }
 
-void skylark::Session::disconnect(int reason)
+bool skylark::Session::onDisconnect(int reason)
 {
+	return true;
 }
 
 bool skylark::Session::preRecv()
 {
+	if (!isConnected())
+		return false;
+
 	PreRecvContext* context = new PreRecvContext(this);
 
 	context->wsabuf.len = 0;
@@ -30,6 +35,9 @@ bool skylark::Session::preRecv()
 
 bool skylark::Session::recv()
 {
+	if (!isConnected())
+		return false;
+
 	if (0 == recvBuffer.getFreeSpaceSize())
 		return false;
 
@@ -45,6 +53,12 @@ bool skylark::Session::recv()
 
 bool skylark::Session::onAccept(Socket* listen)
 {
+	if (true == connected.exchange(true))
+	{
+		CRASH_ASSERT(false);
+		return false;
+	}
+
 	bool resultOk = true;
 	do
 	{
@@ -88,12 +102,12 @@ bool skylark::Session::onAccept(Socket* listen)
 
 bool skylark::Session::onRead()
 {
-	return false;
+	return true;
 }
 
 bool skylark::Session::onSend()
 {
-	return false;
+	return true;
 }
 
 bool skylark::Session::sendCompletion(DWORD transferred)
@@ -115,6 +129,9 @@ bool skylark::Session::recvCompletion(DWORD transferred)
 
 bool skylark::Session::send(std::int8_t * packet, std::size_t len)
 {
+	if (!isConnected())
+		return false;
+
 	Guard guard(sendLock, true);
 
 	if (sendBuffer.getFreeSpaceSize() < len)
@@ -133,6 +150,15 @@ bool skylark::Session::send(std::int8_t * packet, std::size_t len)
 
 bool skylark::Session::flushSend()
 {
+	if (!isConnected())
+	{
+		DisconnectContext* context = new DisconnectContext(this, 0/* temp value*/);
+		disconnect(context);
+		return false;
+	}
+
+	Guard guard(sendLock, true);
+
 	if (0 == sendBuffer.getContiguiousBytes())
 	{
 		if (0 == sendPendingCount)
@@ -144,8 +170,6 @@ bool skylark::Session::flushSend()
 	if(sendPendingCount > 0)
 		return false;
 
-	Guard guard(sendLock, true);
-
 	SendContext* context = new SendContext(this);
 
 	DWORD sendbytes = 0;
@@ -156,11 +180,17 @@ bool skylark::Session::flushSend()
 
 	if (!socket->send(context, context->wsabuf))
 	{
-		//disconnect
+		DisconnectContext* context = new DisconnectContext(this, 0/* temp value*/);
+		disconnect(context);
 		return true;
 	}
 
 	sendPendingCount++;
 
 	return sendPendingCount == 1;
+}
+
+bool skylark::Session::isConnected()
+{
+	return connected;
 }

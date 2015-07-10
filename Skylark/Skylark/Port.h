@@ -11,7 +11,7 @@ namespace skylark
 		Port(int timeout_);
 		~Port();
 
-		void job();
+		void job() const;
 		bool bind(SOCKET socket);
 
 		bool take(Context* context, int key);
