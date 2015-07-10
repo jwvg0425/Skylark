@@ -7,7 +7,7 @@ namespace skylark
 	
 	namespace TLS
 	{
-		extern thread_local LockOrderChecker* lockOrderChecker;
-		extern thread_local std::deque<Session*>* sendRequestSessionList;
+		extern __declspec(thread) LockOrderChecker* lockOrderChecker;
+		extern __declspec(thread) std::deque<Session*>* sendRequestSessionList;
 	}
 }
