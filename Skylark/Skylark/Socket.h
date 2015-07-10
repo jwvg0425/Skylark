@@ -20,7 +20,7 @@ namespace skylark
 	{
 	public:
 		Socket(ConnectType type);
-		~Socket();
+		virtual ~Socket();
 
 		bool reuseAddr(bool reuse);
 		bool setLinger(bool lingerOn, int lingerTime);
