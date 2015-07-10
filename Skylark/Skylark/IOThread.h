@@ -17,6 +17,8 @@ namespace skylark
 		virtual void init();
 
 		virtual int wait();
+		
+		int getId();
 
 	private:
 		int id;

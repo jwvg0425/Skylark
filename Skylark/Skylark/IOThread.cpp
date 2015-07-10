@@ -71,3 +71,8 @@ int skylark::IOThread::wait()
 
 	return 0;
 }
+
+int skylark::IOThread::getId()
+{
+	return id;
+}
