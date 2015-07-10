@@ -3,5 +3,5 @@
 #include "LockOrderChecker.h"
 #include "Session.h"
 
-__declspec(thread) skylark::LockOrderChecker* skylark::TLS::lockOrderChecker = nullptr;
-__declspec(thread) std::deque<skylark::Session*>* skylark::TLS::sendRequestSessionList = nullptr;
+thread_local skylark::LockOrderChecker* skylark::TLS::lockOrderChecker = nullptr;
+thread_local std::deque<skylark::Session*>* skylark::TLS::sendRequestSessionList = nullptr;
