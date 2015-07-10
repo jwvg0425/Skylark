@@ -25,7 +25,7 @@ int EchoApplication::run()
 
 	for (auto thread : threads)
 	{
-		thread->run();
+		thread->wait();
 	}
 
 	printf("end server...\n");
@@ -50,7 +50,7 @@ bool EchoApplication::init()
 	if (!listen->listen())
 		return false;
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < threadNum; i++)
 	{
 		auto thread = new skylark::IOThread(i, mainPort);
 
