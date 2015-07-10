@@ -60,7 +60,7 @@ skylark::UdpContext::UdpContext()
 	memset(&address, 0, sizeof(SOCKADDR_IN));
 }
 
-skylark::UdpContext::UdpContext(std::string& addr, std::uint16_t port)
+skylark::UdpContext::UdpContext(const std::string& addr, std::uint16_t port)
 {
 	address.sin_family = AF_INET;
 	address.sin_port = htons(port);

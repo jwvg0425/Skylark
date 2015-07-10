@@ -13,10 +13,10 @@ namespace skylark
 		virtual bool onFailure() = 0;
 	};
 
-	struct UdpContext
+	struct UdpContext : Context
 	{
 		UdpContext();
-		UdpContext(std::string& addr, std::uint16_t port);
+		UdpContext(const std::string& addr, std::uint16_t port);
 		virtual ~UdpContext() = default;
 
 		SOCKADDR_IN address;
