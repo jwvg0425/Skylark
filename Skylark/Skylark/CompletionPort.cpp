@@ -1,21 +1,21 @@
 #include "stdafx.h"
-#include "Port.h"
+#include "CompletionPort.h"
 #include "Exception.h"
 #include "Context.h"
 
-skylark::Port::Port(int timeout_)
+skylark::CompletionPort::CompletionPort(int timeout_)
 	:timeout(timeout_)
 {
 	completionPort = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, 0, 0);
 	CRASH_ASSERT(completionPort != NULL);
 }
 
-skylark::Port::~Port()
+skylark::CompletionPort::~CompletionPort()
 {
 	CloseHandle(completionPort);
 }
 
-void skylark::Port::job() const
+void skylark::CompletionPort::job() const
 {
 	DWORD transferred = 0;
 	Overlapped* overlapped = nullptr;
@@ -43,7 +43,7 @@ void skylark::Port::job() const
 	delete overlapped;
 }
 
-bool skylark::Port::bind(SOCKET socket)
+bool skylark::CompletionPort::bind(SOCKET socket)
 {
 	HANDLE handle = CreateIoCompletionPort((HANDLE)socket, completionPort, 0, 0);
 
@@ -55,14 +55,14 @@ bool skylark::Port::bind(SOCKET socket)
 	return true;
 }
 
-bool skylark::Port::take(Context * context, int key)
+bool skylark::CompletionPort::take(Context * context, int key)
 {
 	Overlapped* overlapped = new Overlapped(context);
 
 	return PostQueuedCompletionStatus(completionPort, 0, (ULONG_PTR)key, overlapped) == TRUE;
 }
 
-bool skylark::postContext(Port * port, Context * context, int key)
+bool skylark::postContext(CompletionPort * port, Context * context, int key)
 {
 	return port->take(context, key);
 }

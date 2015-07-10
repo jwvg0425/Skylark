@@ -3,7 +3,7 @@
 
 namespace skylark
 {
-	class Port;
+	class CompletionPort;
 	struct Context;
 
 	enum class ConnectType
@@ -28,7 +28,7 @@ namespace skylark
 		bool setNodelay(bool nodelay);
 		bool setReceiveBufferSize(int size);
 
-		bool completeTo(Port* port);
+		bool completeTo(CompletionPort* port);
 
 		bool bind(const std::string& addr, std::uint16_t port);
 		bool listen();
@@ -123,9 +123,54 @@ namespace skylark
 		}
 
 		template<typename C>
+		bool recvFrom(C* context, WSABUF& buf)
+		{
+			static_assert(std::is_base_of<UdpContext, C>::value, "context must be Context's derived type.");
+
+			DWORD recvBytes = 0;
+			DWORD flags = 0;
+			int size = sizeof(SOCKADDR_IN);
+
+			Overlapped* overlapped = new skylark::Overlapped(context);
+			if (SOCKET_ERROR == WSARecvFrom(socket, &buf, 1, &recvBytes, &flags, (sockaddr*)context->address, size, overlapped, nullptr))
+			{
+				if (WSAGetLastError() != WSA_IO_PENDING)
+				{
+					delete overlapped;
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		template<typename C>
+		bool sendTo(C* context, WSABUF& buf)
+		{
+			static_assert(std::is_base_of<UdpContext, C>::value, "context must be UdpContext's derived type.");
+
+			Overlapped* overlapped = new Overlapped(context);
+			DWORD sendbytes = 0;
+			DWORD flags = 0;
+			int size = sizeof(SOCKADDR_IN);
+
+			if (SOCKET_ERROR == WSASendTo(socket, &buf, 1, &sendbytes, flags, (sockaddr*)context->address, size, overlapped, nullptr))
+			{
+				if (WSAGetLastError() != WSA_IO_PENDING)
+				{
+					delete overlapped;
+
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		template<typename C>
 		bool send(C* context, WSABUF& buf)
 		{
-			static_assert(std::is_base_of<Context, C>::value, "context must be Context's derived type.");
+			static_assert(std::is_base_of<Context, C>::value, "context must be UdpContext's derived type.");
 
 			Overlapped* overlapped = new Overlapped(context);
 			DWORD sendbytes = 0;

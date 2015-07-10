@@ -54,3 +54,15 @@ bool skylark::SendContext::onFailure()
 
 	return session->disconnect(context);
 }
+
+skylark::UdpContext::UdpContext()
+{
+	memset(&address, 0, sizeof(SOCKADDR_IN));
+}
+
+skylark::UdpContext::UdpContext(std::string& addr, std::uint16_t port)
+{
+	address.sin_family = AF_INET;
+	address.sin_port = htons(port);
+	address.sin_addr.s_addr = inet_addr(addr.c_str());
+}

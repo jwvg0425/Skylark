@@ -12,6 +12,15 @@ namespace skylark
 		//call when onComplete return false
 		virtual bool onFailure() = 0;
 	};
+
+	struct UdpContext
+	{
+		UdpContext();
+		UdpContext(std::string& addr, std::uint16_t port);
+		virtual ~UdpContext() = default;
+
+		SOCKADDR_IN address;
+	};
 	
 	class Session;
 	class Socket;

@@ -2,13 +2,13 @@
 
 namespace skylark
 {
-	class Port;
+	class CompletionPort;
 
 	class IOThread
 	{
 	public:
-		explicit IOThread(int id_, Port* port_, std::function<void()> customFunc_);
-		explicit IOThread(int id_, Port* port_);
+		explicit IOThread(int id_, CompletionPort* port_, std::function<void()> customFunc_);
+		explicit IOThread(int id_, CompletionPort* port_);
 		virtual ~IOThread();
 
 		virtual void ioJob();
@@ -20,7 +20,7 @@ namespace skylark
 
 	private:
 		int id;
-		Port* port;
+		CompletionPort* port;
 		std::thread t;
 		std::function<void()> customFunc;
 	};

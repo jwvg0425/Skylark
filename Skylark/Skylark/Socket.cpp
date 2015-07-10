@@ -1,5 +1,5 @@
 ﻿#include "stdafx.h"
-#include "Port.h"
+#include "CompletionPort.h"
 #include "Socket.h"
 #include "Exception.h"
 
@@ -103,7 +103,7 @@ namespace skylark
 		return SOCKET_ERROR != setsockopt(socket, SOL_SOCKET, SO_RCVBUF, (const char*)&size, sizeof(int));
 	}
 
-	bool Socket::completeTo(Port * port)
+	bool Socket::completeTo(CompletionPort * port)
 	{
 		bindToPort = true;
 

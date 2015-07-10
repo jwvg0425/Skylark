@@ -62,9 +62,6 @@
     <ClInclude Include="Exception.h">
       <Filter>소스 파일\utility</Filter>
     </ClInclude>
-    <ClInclude Include="Port.h">
-      <Filter>소스 파일\network</Filter>
-    </ClInclude>
     <ClInclude Include="CircularBuffer.h">
       <Filter>소스 파일\utility</Filter>
     </ClInclude>
@@ -75,6 +72,9 @@
       <Filter>소스 파일\thread</Filter>
     </ClInclude>
     <ClInclude Include="Session.h">
+      <Filter>소스 파일\network</Filter>
+    </ClInclude>
+    <ClInclude Include="CompletionPort.h">
       <Filter>소스 파일\network</Filter>
     </ClInclude>
   </ItemGroup>
@@ -100,9 +100,6 @@
     <ClCompile Include="Exception.cpp">
       <Filter>소스 파일\utility</Filter>
     </ClCompile>
-    <ClCompile Include="Port.cpp">
-      <Filter>소스 파일\network</Filter>
-    </ClCompile>
     <ClCompile Include="CircularBuffer.cpp">
       <Filter>소스 파일\utility</Filter>
     </ClCompile>
@@ -113,6 +110,9 @@
       <Filter>소스 파일\thread</Filter>
     </ClCompile>
     <ClCompile Include="Session.cpp">
+      <Filter>소스 파일\network</Filter>
+    </ClCompile>
+    <ClCompile Include="CompletionPort.cpp">
       <Filter>소스 파일\network</Filter>
     </ClCompile>
   </ItemGroup>

@@ -79,7 +79,7 @@
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Lock.h" />
     <ClInclude Include="LockOrderChecker.h" />
-    <ClInclude Include="Port.h" />
+    <ClInclude Include="CompletionPort.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="Skylark.h" />
     <ClInclude Include="Socket.h" />
@@ -95,7 +95,7 @@
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Lock.cpp" />
     <ClCompile Include="LockOrderChecker.cpp" />
-    <ClCompile Include="Port.cpp" />
+    <ClCompile Include="CompletionPort.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="stdafx.cpp">

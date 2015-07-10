@@ -5,7 +5,7 @@
 #include "ThreadLocal.h"
 #include "Exception.h"
 
-skylark::Session::Session(Port * port_, std::size_t sendBufSize, std::size_t recvBufSize)
+skylark::Session::Session(CompletionPort * port_, std::size_t sendBufSize, std::size_t recvBufSize)
 	:socket(new Socket(ConnectType::TCP)), port(port_), sendBuffer(sendBufSize), recvBuffer(recvBufSize), sendLock(Lock::Order::LUGGAGE_CLASS), connected(false)
 {
 }

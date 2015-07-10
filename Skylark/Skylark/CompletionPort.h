@@ -5,11 +5,11 @@ namespace skylark
 {
 	struct Context;
 
-	class Port
+	class CompletionPort
 	{
 	public:
-		Port(int timeout_);
-		~Port();
+		CompletionPort(int timeout_);
+		~CompletionPort();
 
 		void job() const;
 		bool bind(SOCKET socket);
@@ -20,5 +20,5 @@ namespace skylark
 		int timeout;
 	};
 
-	bool postContext(Port* port, Context* context, int key);
+	bool postContext(CompletionPort* port, Context* context, int key);
 }

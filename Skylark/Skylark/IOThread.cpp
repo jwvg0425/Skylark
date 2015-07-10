@@ -2,7 +2,7 @@
 #include "IOThread.h"
 #include "ThreadLocal.h"
 #include "LockOrderChecker.h"
-#include "Port.h"
+#include "CompletionPort.h"
 #include "Session.h"
 
 namespace skylark
@@ -31,13 +31,13 @@ void skylark::IOThread::customJob()
 		customFunc();
 }
 
-skylark::IOThread::IOThread(int id_, Port* port_, std::function<void()> customFunc_) :
+skylark::IOThread::IOThread(int id_, CompletionPort* port_, std::function<void()> customFunc_) :
 	id(id_), port(port_), customFunc(customFunc_), t(ioThreadFunc, this)
 {
 
 }
 
-skylark::IOThread::IOThread(int id_, Port * port_)
+skylark::IOThread::IOThread(int id_, CompletionPort * port_)
 	:id(id_), port(port_), customFunc(nullptr), t(ioThreadFunc, this)
 {
 }

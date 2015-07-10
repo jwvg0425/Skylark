@@ -4,13 +4,13 @@
 
 namespace skylark
 {
-	class Port;
+	class CompletionPort;
 	class Socket;
 
 	class Session
 	{
 	public:
-		Session(Port* port, std::size_t sendBufSize, std::size_t recvBufSize);
+		Session(CompletionPort* port, std::size_t sendBufSize, std::size_t recvBufSize);
 		virtual ~Session();
 
 		template<typename C>
@@ -46,7 +46,7 @@ namespace skylark
 		bool isConnected();
 
 	protected:
-		Port* port;
+		CompletionPort* port;
 		Socket* socket = nullptr;
 		CircularBuffer sendBuffer;
 		CircularBuffer recvBuffer;
