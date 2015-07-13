@@ -10,3 +10,5 @@
 
 #include "LockOrderChecker.h"
 #include "ThreadLocal.h"
+
+#include "Exception.h"
