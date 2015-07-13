@@ -154,7 +154,7 @@ namespace skylark
 			DWORD flags = 0;
 			int size = sizeof(SOCKADDR_IN);
 
-			if (SOCKET_ERROR == WSASendTo(socket, &buf, 1, &sendbytes, flags, (sockaddr*)&context->address, &size, overlapped, nullptr))
+			if (SOCKET_ERROR == WSASendTo(socket, &buf, 1, &sendbytes, flags, (sockaddr*)&context->address, size, overlapped, nullptr))
 			{
 				if (WSAGetLastError() != WSA_IO_PENDING)
 				{

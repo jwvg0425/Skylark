@@ -66,3 +66,9 @@ skylark::UdpContext::UdpContext(const std::string& addr, std::uint16_t port)
 	address.sin_port = htons(port);
 	address.sin_addr.s_addr = inet_addr(addr.c_str());
 }
+
+skylark::UdpContext::UdpContext(SOCKADDR_IN address_)
+	:address(address_)
+{
+
+}
