@@ -33,6 +33,9 @@
     <Filter Include="소스 파일\memory">
       <UniqueIdentifier>{a0ae0e53-1c72-4cbe-a97a-2b90a6793aaa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\timer">
+      <UniqueIdentifier>{924d6bd7-c4bd-4a28-8520-4f8d97904b78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
