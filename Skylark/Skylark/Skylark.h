@@ -12,3 +12,6 @@
 #include "ThreadLocal.h"
 
 #include "Exception.h"
+
+#include "MemoryPool.h"
+#include "ObjectPool.h"
