@@ -20,7 +20,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -80,6 +80,8 @@
     <ClInclude Include="Lock.h" />
     <ClInclude Include="LockOrderChecker.h" />
     <ClInclude Include="CompletionPort.h" />
+    <ClInclude Include="MemoryPool.h" />
+    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="Skylark.h" />
     <ClInclude Include="Socket.h" />
@@ -96,6 +98,7 @@
     <ClCompile Include="Lock.cpp" />
     <ClCompile Include="LockOrderChecker.cpp" />
     <ClCompile Include="CompletionPort.cpp" />
+    <ClCompile Include="MemoryPool.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="stdafx.cpp">

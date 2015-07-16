@@ -30,6 +30,9 @@
     <Filter Include="소스 파일\global\manager">
       <UniqueIdentifier>{a799fb3d-b4c8-4b30-b975-9218dbcb95f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\memory">
+      <UniqueIdentifier>{a0ae0e53-1c72-4cbe-a97a-2b90a6793aaa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -77,6 +80,12 @@
     <ClInclude Include="CompletionPort.h">
       <Filter>소스 파일\network</Filter>
     </ClInclude>
+    <ClInclude Include="MemoryPool.h">
+      <Filter>소스 파일\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>소스 파일\memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -114,6 +123,9 @@
     </ClCompile>
     <ClCompile Include="CompletionPort.cpp">
       <Filter>소스 파일\network</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryPool.cpp">
+      <Filter>소스 파일\memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

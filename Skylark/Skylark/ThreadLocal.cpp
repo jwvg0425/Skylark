@@ -3,5 +3,10 @@
 #include "LockOrderChecker.h"
 #include "Session.h"
 
+#if _MSC_VER >= 1900
 thread_local skylark::LockOrderChecker* skylark::TLS::lockOrderChecker = nullptr;
 thread_local std::deque<skylark::Session*>* skylark::TLS::sendRequestSessionList = nullptr;
+#elif MSC_VER <= 1800
+__declspec(thread) skylark::LockOrderChecker* skylark::TLS::lockOrderChecker = nullptr;
+__declspec(thread) std::deque<skylark::Session*>* skylark::TLS::sendRequestSessionList = nullptr;
+#endif
