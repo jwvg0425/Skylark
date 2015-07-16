@@ -16,6 +16,7 @@ namespace skylark
 	struct UdpContext : Context
 	{
 		UdpContext();
+		UdpContext(SOCKADDR_IN address_);
 		UdpContext(const std::string& addr, std::uint16_t port);
 		virtual ~UdpContext() = default;
 
