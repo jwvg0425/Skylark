@@ -2,6 +2,8 @@
 
 namespace skylark
 {
+	LONG WINAPI exceptionFilter(EXCEPTION_POINTERS* exceptionInfo);
+
 	inline void CRASH_ASSERT(bool isOk)
 	{
 		if (isOk)
