@@ -104,19 +104,21 @@ namespace skylark
 		int reason;
 	};
 
-	struct Overlapped : OVERLAPPED
+	struct Overlapped
 	{
 		Overlapped(Context* context_) : context(context_)
 		{
 			//init overlapped
-			memset(this, 0, sizeof(OVERLAPPED));
+			memset(&overlapped, 0, sizeof(OVERLAPPED));
 		}
 
 		~Overlapped()
 		{
 			delete context;
+			context = nullptr;
 		}
 
-		Context* context;
+		OVERLAPPED overlapped;
+		Context* context = nullptr;
 	};
 }

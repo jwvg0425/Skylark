@@ -40,7 +40,7 @@ namespace skylark
 
 			Overlapped* overlapped = new Overlapped(context);
 
-			if (FALSE == disconnectEx_(socket, overlapped, TF_REUSE_SOCKET, 0))
+			if (FALSE == disconnectEx_(socket, (LPOVERLAPPED)overlapped, TF_REUSE_SOCKET, 0))
 			{
 				if (WSAGetLastError() != WSA_IO_PENDING)
 				{
@@ -62,7 +62,7 @@ namespace skylark
 			Overlapped* overlapped = new Overlapped(context);
 
 			if (FALSE == acceptEx_(listenSocket->socket, socket, acceptBuf, 0,
-				sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, &bytes, overlapped))
+				sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, &bytes, (LPOVERLAPPED)overlapped))
 			{
 				if (WSAGetLastError() != WSA_IO_PENDING)
 				{
@@ -88,7 +88,7 @@ namespace skylark
 			Overlapped* overlapped = new Overlapped(context);
 
 			if (FALSE == connectEx_(socket, (sockaddr*)&serverSockAddr, sizeof(SOCKADDR_IN),
-				nullptr, 0, nullptr, overlapped))
+				nullptr, 0, nullptr, (LPOVERLAPPED)overlapped))
 			{
 				if (WSAGetLastError() != WSA_IO_PENDING)
 				{
@@ -110,7 +110,7 @@ namespace skylark
 			DWORD flags = 0;
 
 			Overlapped* overlapped = new skylark::Overlapped(context);
-			if (SOCKET_ERROR == WSARecv(socket, &buf, 1, &recvBytes, &flags, overlapped, nullptr))
+			if (SOCKET_ERROR == WSARecv(socket, &buf, 1, &recvBytes, &flags, (LPOVERLAPPED)overlapped, nullptr))
 			{
 				if (WSAGetLastError() != WSA_IO_PENDING)
 				{
@@ -132,7 +132,7 @@ namespace skylark
 			int size = sizeof(SOCKADDR_IN);
 
 			Overlapped* overlapped = new skylark::Overlapped(context);
-			if (SOCKET_ERROR == WSARecvFrom(socket, &buf, 1, &recvBytes, &flags, (sockaddr*)&context->address, &size, overlapped, nullptr))
+			if (SOCKET_ERROR == WSARecvFrom(socket, &buf, 1, &recvBytes, &flags, (sockaddr*)&context->address, &size, (LPOVERLAPPED)overlapped, nullptr))
 			{
 				if (WSAGetLastError() != WSA_IO_PENDING)
 				{
@@ -154,7 +154,7 @@ namespace skylark
 			DWORD flags = 0;
 			int size = sizeof(SOCKADDR_IN);
 
-			if (SOCKET_ERROR == WSASendTo(socket, &buf, 1, &sendbytes, flags, (sockaddr*)&context->address, size, overlapped, nullptr))
+			if (SOCKET_ERROR == WSASendTo(socket, &buf, 1, &sendbytes, flags, (sockaddr*)&context->address, size, (LPOVERLAPPED)overlapped, nullptr))
 			{
 				if (WSAGetLastError() != WSA_IO_PENDING)
 				{
@@ -176,7 +176,7 @@ namespace skylark
 			DWORD sendbytes = 0;
 			DWORD flags = 0;
 
-			if (SOCKET_ERROR == WSASend(socket, &buf, 1, &sendbytes, flags, overlapped, nullptr))
+			if (SOCKET_ERROR == WSASend(socket, &buf, 1, &sendbytes, flags, (LPOVERLAPPED)overlapped, nullptr))
 			{
 				if (WSAGetLastError() != WSA_IO_PENDING)
 				{

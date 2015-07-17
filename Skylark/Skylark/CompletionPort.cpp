@@ -18,13 +18,11 @@ skylark::CompletionPort::~CompletionPort()
 void skylark::CompletionPort::job() const
 {
 	DWORD transferred = 0;
-	Overlapped* overlapped = nullptr;
+	LPOVERLAPPED overlapped = nullptr;
 
 	ULONG_PTR completionKey = 0;
 
-	int ret = GetQueuedCompletionStatus(completionPort, &transferred, (PULONG_PTR)&completionKey, (LPOVERLAPPED*)&overlapped, timeout);
-
-	Context* context = (overlapped == nullptr)? nullptr : overlapped->context;
+	int ret = GetQueuedCompletionStatus(completionPort, &transferred, (PULONG_PTR)&completionKey, &overlapped, timeout);
 
 	if (ret == 0 || transferred == 0)
 	{
@@ -32,6 +30,12 @@ void skylark::CompletionPort::job() const
 		if (overlapped == nullptr && GetLastError() == WAIT_TIMEOUT)
 			return;
 	}
+
+	Overlapped* real = reinterpret_cast<Overlapped*>(overlapped);
+	Context* context = (overlapped == nullptr)? nullptr : real->context;
+
+
+	CRASH_ASSERT(context != nullptr);
 
 	bool completionOk = context->onComplete(transferred, completionKey);
 
@@ -59,7 +63,7 @@ bool skylark::CompletionPort::take(Context * context, int key)
 {
 	Overlapped* overlapped = new Overlapped(context);
 
-	return PostQueuedCompletionStatus(completionPort, 0, (ULONG_PTR)key, overlapped) == TRUE;
+	return PostQueuedCompletionStatus(completionPort, 0, (ULONG_PTR)key, (LPOVERLAPPED)overlapped) == TRUE;
 }
 
 bool skylark::postContext(CompletionPort * port, Context * context, int key)
