@@ -7,7 +7,7 @@
 #include <strsafe.h>
 
 
-#define MAX_BUF_SIZE
+#define MAX_BUF_SIZE 255
 
 void MakeDump(EXCEPTION_POINTERS* e)
 {
@@ -17,7 +17,7 @@ void MakeDump(EXCEPTION_POINTERS* e)
 	StringCbPrintf(tszFileName,
 		_countof(tszFileName),
 		_T("%s_%4d%02d%02d_%02d%02d%02d.dmp"),
-		_T("EduServerDump"),
+		_T("SkylarkDump"),
 		stTime.wYear,
 		stTime.wMonth,
 		stTime.wDay,
@@ -70,7 +70,7 @@ LONG WINAPI skylark::exceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 		{
 			do
 			{
-				/// 내 프로세스 내의 스레드중 나 자신 스레드만 빼고 멈추게..
+				// stop thread(except this one)
 				if (te32.th32OwnerProcessID == myProcessId && te32.th32ThreadID != myThreadId)
 				{
 					HANDLE hThread = OpenThread(THREAD_ALL_ACCESS, FALSE, te32.th32ThreadID);
@@ -87,12 +87,12 @@ LONG WINAPI skylark::exceptionFilter(EXCEPTION_POINTERS* exceptionInfo)
 		CloseHandle(hThreadSnap);
 	}
 
-	/// 마지막으로 dump file 남기자.
+	// dump
 	MakeDump(exceptionInfo);
 
 	ExitProcess(1);
 
-	/// 여기서 쫑
+	// end
 	return EXCEPTION_EXECUTE_HANDLER;
 
 }
