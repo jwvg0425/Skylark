@@ -12,7 +12,7 @@ public:
 	virtual bool init();
 	
 private:
-	skylark::Port* mainPort;
+	skylark::CompletionPort* mainPort;
 	int threadNum;
 	skylark::Socket* listen;
 	std::vector<skylark::IOThread*> threads;

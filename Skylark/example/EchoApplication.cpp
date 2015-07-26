@@ -35,7 +35,7 @@ int EchoApplication::run()
 
 bool EchoApplication::init()
 {
-	mainPort = new skylark::Port(10);
+	mainPort = new skylark::CompletionPort(10);
 	listen = new skylark::Socket(skylark::ConnectType::TCP);
 
 	if (!listen->completeTo(mainPort))
