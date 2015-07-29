@@ -10,7 +10,7 @@ namespace skylark
 			regionASize(0), regionBSize(0),
 			capacity(capacity_)
 		{
-			buffer = new std::int8_t[capacity];
+			buffer = new char[capacity];
 			bufferEnd = buffer + capacity;
 			regionAPointer = buffer;
 		}
@@ -32,9 +32,9 @@ namespace skylark
 			regionAPointer = buffer;
 		}
 
-		bool peek(OUT std::int8_t* destbuf, std::size_t bytes) const;
-		bool read(OUT std::int8_t* destbuf, std::size_t bytes);
-		bool write(const std::int8_t* data, std::size_t bytes);
+		bool peek(OUT char* destbuf, std::size_t bytes) const;
+		bool read(OUT char* destbuf, std::size_t bytes);
+		bool write(const char* data, std::size_t bytes);
 
 		void remove(std::size_t len);
 
@@ -75,7 +75,7 @@ namespace skylark
 			}
 		}
 
-		std::int8_t* getBuffer() const
+		char* getBuffer() const
 		{
 			if (regionBPointer != nullptr)
 			{
@@ -99,7 +99,7 @@ namespace skylark
 			}
 		}
 
-		std::int8_t* getBufferStart() const
+		char* getBufferStart() const
 		{
 			if (regionASize > 0)
 			{
@@ -136,13 +136,13 @@ namespace skylark
 		}
 
 	private:
-		std::int8_t* buffer;
-		std::int8_t* bufferEnd;
+		char* buffer;
+		char* bufferEnd;
 
-		std::int8_t* regionAPointer;
+		char* regionAPointer;
 		std::size_t  regionASize;
 
-		std::int8_t* regionBPointer;
+		char* regionBPointer;
 		std::size_t  regionBSize;
 
 		std::size_t capacity;

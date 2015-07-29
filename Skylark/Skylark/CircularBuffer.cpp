@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CircularBuffer.h"
 
-bool skylark::CircularBuffer::peek(OUT std::int8_t * destbuf, std::size_t bytes) const
+bool skylark::CircularBuffer::peek(OUT char * destbuf, std::size_t bytes) const
 {
 	assert(buffer != nullptr);
 
@@ -35,7 +35,7 @@ bool skylark::CircularBuffer::peek(OUT std::int8_t * destbuf, std::size_t bytes)
 	return true;
 }
 
-bool skylark::CircularBuffer::read(OUT std::int8_t * destbuf, std::size_t bytes)
+bool skylark::CircularBuffer::read(OUT char * destbuf, std::size_t bytes)
 {
 	assert(buffer != nullptr);
 
@@ -94,7 +94,7 @@ bool skylark::CircularBuffer::read(OUT std::int8_t * destbuf, std::size_t bytes)
 	return true;
 }
 
-bool skylark::CircularBuffer::write(const std::int8_t * data, std::size_t bytes)
+bool skylark::CircularBuffer::write(const char * data, std::size_t bytes)
 {
 	assert(buffer != nullptr);
 

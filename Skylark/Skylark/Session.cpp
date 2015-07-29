@@ -132,7 +132,7 @@ bool skylark::Session::recvCompletion(DWORD transferred)
 	return onRead();
 }
 
-bool skylark::Session::send(std::int8_t * packet, std::size_t len)
+bool skylark::Session::send(char * packet, std::size_t len)
 {
 	if (!isConnected())
 		return false;
@@ -144,11 +144,7 @@ bool skylark::Session::send(std::int8_t * packet, std::size_t len)
 
 	TLS::sendRequestSessionList->push_back(this);
 
-	auto destData = sendBuffer.getBuffer();
-
-	memcpy(destData, packet, len);
-
-	sendBuffer.commit(len);
+	sendBuffer.write(packet, len);
 
 	return true;
 }

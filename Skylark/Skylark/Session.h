@@ -41,7 +41,7 @@ namespace skylark
 		bool sendCompletion(DWORD transferred);
 		bool recvCompletion(DWORD transferred);
 
-		virtual bool send(std::int8_t* packet, std::size_t len);
+		virtual bool send(char* packet, std::size_t len);
 		virtual bool flushSend();
 
 		bool isConnected();
