@@ -36,6 +36,9 @@
     <Filter Include="소스 파일\timer">
       <UniqueIdentifier>{924d6bd7-c4bd-4a28-8520-4f8d97904b78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\network\packet">
+      <UniqueIdentifier>{43619b40-818b-4410-a96d-e2bb60a75bf5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -88,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="ObjectPool.h">
       <Filter>소스 파일\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketHandler.h">
+      <Filter>소스 파일\network\packet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

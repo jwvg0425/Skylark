@@ -44,6 +44,39 @@ namespace skylark
 		virtual bool send(char* packet, std::size_t len);
 		virtual bool flushSend();
 
+		template<typename Packet>
+		bool peekPacket(const Packet& p)
+		{
+			if (recvBuffer.getStoredSize() < sizeof(p))
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		template<typename Packet>
+		bool parsePacket(Packet& p)
+		{
+			if (!recvBuffer.read((char*)&p, sizeof(Packet)))
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		template<typename Packet>
+		bool sendPacket(const Packet& p)
+		{
+			if (!send((char*)&p, sizeof(Packet)))
+			{
+				return false;
+			}
+
+			return true;
+		}
+
 		bool isConnected();
 
 	protected:

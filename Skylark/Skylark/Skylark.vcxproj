@@ -137,6 +137,7 @@
     <ClInclude Include="CompletionPort.h" />
     <ClInclude Include="MemoryPool.h" />
     <ClInclude Include="ObjectPool.h" />
+    <ClInclude Include="PacketHandler.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="Skylark.h" />
     <ClInclude Include="Socket.h" />
