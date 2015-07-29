@@ -5,7 +5,7 @@
 
 bool skylark::AcceptContext::onComplete(int transferred, int key)
 {
-	return session->onAccept(listen);
+	return session->acceptCompletion(listen);
 }
 
 bool skylark::PreRecvContext::onComplete(int transferred, int key)

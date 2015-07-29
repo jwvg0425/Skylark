@@ -51,7 +51,7 @@ bool skylark::Session::recv()
 	return socket->recv(recvContext, recvContext->wsabuf);
 }
 
-bool skylark::Session::onAccept(Socket* listen)
+bool skylark::Session::acceptCompletion(Socket* listen)
 {
 	if (true == connected.exchange(true))
 	{
@@ -97,6 +97,11 @@ bool skylark::Session::onAccept(Socket* listen)
 		printf("pre recv failed.\n");
 	}
 
+	return onAccept();
+}
+
+bool skylark::Session::onAccept()
+{
 	return true;
 }
 

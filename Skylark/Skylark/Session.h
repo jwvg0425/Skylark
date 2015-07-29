@@ -32,11 +32,12 @@ namespace skylark
 		bool preRecv();
 		bool recv();
 
-		virtual bool onAccept(Socket* listen);
+		virtual bool onAccept();
 		virtual bool onRead();
 		virtual bool onSend();
 		virtual bool onDisconnect(int reason);
 
+		bool acceptCompletion(Socket* listen);
 		bool sendCompletion(DWORD transferred);
 		bool recvCompletion(DWORD transferred);
 
