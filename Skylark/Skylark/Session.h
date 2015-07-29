@@ -45,14 +45,14 @@ namespace skylark
 		virtual bool flushSend();
 
 		template<typename Packet>
-		bool peekPacket(const Packet& p)
+		bool peekPacket(Packet& p)
 		{
 			if (recvBuffer.getStoredSize() < sizeof(p))
 			{
 				return false;
 			}
 
-			return true;
+			return recvBuffer.peek((char*)&p, sizeof(Packet));
 		}
 
 		template<typename Packet>
