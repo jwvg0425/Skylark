@@ -132,6 +132,28 @@ bool skylark::Session::recvCompletion(DWORD transferred)
 	return onRead();
 }
 
+void skylark::Session::addRef()
+{
+	refCount++;
+}
+
+void skylark::Session::releaseRef()
+{
+	refCount--;
+
+	CRASH_ASSERT(refCount >= 0);
+
+	if (refCount == 0)
+	{
+		onRelease();
+	}
+}
+
+void skylark::Session::onRelease()
+{
+
+}
+
 bool skylark::Session::send(char * packet, std::size_t len)
 {
 	if (!isConnected())

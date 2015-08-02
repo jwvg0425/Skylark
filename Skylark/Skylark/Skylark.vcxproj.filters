@@ -39,6 +39,9 @@
     <Filter Include="소스 파일\network\packet">
       <UniqueIdentifier>{43619b40-818b-4410-a96d-e2bb60a75bf5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\network\session">
+      <UniqueIdentifier>{178cdc8c-e47c-42f0-8325-720ac2d789ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -80,9 +83,6 @@
     <ClInclude Include="IOThread.h">
       <Filter>소스 파일\thread</Filter>
     </ClInclude>
-    <ClInclude Include="Session.h">
-      <Filter>소스 파일\network</Filter>
-    </ClInclude>
     <ClInclude Include="CompletionPort.h">
       <Filter>소스 파일\network</Filter>
     </ClInclude>
@@ -94,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="PacketHandler.h">
       <Filter>소스 파일\network\packet</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>소스 파일\network\session</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -127,14 +130,14 @@
     <ClCompile Include="IOThread.cpp">
       <Filter>소스 파일\thread</Filter>
     </ClCompile>
-    <ClCompile Include="Session.cpp">
-      <Filter>소스 파일\network</Filter>
-    </ClCompile>
     <ClCompile Include="CompletionPort.cpp">
       <Filter>소스 파일\network</Filter>
     </ClCompile>
     <ClCompile Include="MemoryPool.cpp">
       <Filter>소스 파일\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>소스 파일\network\session</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

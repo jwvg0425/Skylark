@@ -41,6 +41,11 @@ namespace skylark
 		bool sendCompletion(DWORD transferred);
 		bool recvCompletion(DWORD transferred);
 
+		void addRef();
+		void releaseRef();
+
+		virtual void onRelease();
+
 		virtual bool send(char* packet, std::size_t len);
 		virtual bool flushSend();
 
@@ -79,6 +84,8 @@ namespace skylark
 
 		bool isConnected();
 
+		int getRefCount() { return refCount; }
+
 	protected:
 		CompletionPort* port;
 		Socket* socket = nullptr;
@@ -87,6 +94,7 @@ namespace skylark
 		Lock sendLock;
 		int sendPendingCount = 0;
 		std::atomic<bool> connected;
+		std::atomic<int> refCount;
 
 	};
 }
