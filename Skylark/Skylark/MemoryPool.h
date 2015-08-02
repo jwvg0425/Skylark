@@ -45,7 +45,7 @@ namespace skylark
 	class MemoryPool
 	{
 	public:
-		static MemoryPool* GetInstance();
+		static MemoryPool* getInstance();
 
 		void* allocate(unsigned int size);
 		void deallocate(void* ptr, long extraInfo);
@@ -70,7 +70,7 @@ namespace skylark
 	{
 		static_assert(true == std::is_convertible<T, PooledAllocatable>::value, "only allowed when PooledAllocatable");
 
-		void* alloc = MemoryPool::GetInstance()->allocate(sizeof(T));
+		void* alloc = MemoryPool::getInstance()->allocate(sizeof(T));
 		new (alloc)T(args...);
 		return reinterpret_cast<T*>(alloc);
 	}
@@ -81,6 +81,6 @@ namespace skylark
 		static_assert(true == std::is_convertible<T, PooledAllocatable>::value, "only allowed when PooledAllocatable");
 
 		object->~T();
-		MemoryPool::GetInstance()->deallocate(object, sizeof(T));
+		MemoryPool::getInstance()->deallocate(object, sizeof(T));
 	}
 }

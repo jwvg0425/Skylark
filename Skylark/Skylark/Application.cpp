@@ -9,7 +9,7 @@ skylark::Application::Application()
 	SetUnhandledExceptionFilter(exceptionFilter);
 
 	//global manager init
-	MemoryPool::GetInstance();
+	MemoryPool::getInstance();
 }
 
 skylark::Application::~Application()

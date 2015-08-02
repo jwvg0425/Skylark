@@ -4,6 +4,7 @@
 #include "LockOrderChecker.h"
 #include "CompletionPort.h"
 #include "Session.h"
+#include "Timer.h"
 
 namespace skylark
 {
@@ -14,6 +15,7 @@ namespace skylark
 		while (true)
 		{
 			thread->ioJob();
+			TLS::timer->doTimerJob();
 			thread->sendJob();
 			thread->customJob();
 		}
@@ -63,6 +65,8 @@ void skylark::IOThread::init()
 {
 	TLS::lockOrderChecker = new LockOrderChecker(id);
 	TLS::sendRequestSessionList = new std::deque<Session*>();
+	TLS::timer = new Timer();
+	TLS::tickCount = GetTickCount64();
 }
 
 int skylark::IOThread::wait()

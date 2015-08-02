@@ -136,15 +136,19 @@
     <ClInclude Include="LockOrderChecker.h" />
     <ClInclude Include="CompletionPort.h" />
     <ClInclude Include="MemoryPool.h" />
+    <ClInclude Include="MPL.h" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="PacketHandler.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="Skylark.h" />
     <ClInclude Include="Socket.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SyncExecutable.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="IOThread.h" />
     <ClInclude Include="ThreadLocal.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="XTL.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -165,6 +169,7 @@
     </ClCompile>
     <ClCompile Include="IOThread.cpp" />
     <ClCompile Include="ThreadLocal.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

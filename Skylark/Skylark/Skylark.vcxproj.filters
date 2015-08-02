@@ -98,6 +98,18 @@
     <ClInclude Include="Session.h">
       <Filter>소스 파일\network\session</Filter>
     </ClInclude>
+    <ClInclude Include="SyncExecutable.h">
+      <Filter>소스 파일\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>소스 파일\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="XTL.h">
+      <Filter>소스 파일\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="MPL.h">
+      <Filter>소스 파일\utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -138,6 +150,9 @@
     </ClCompile>
     <ClCompile Include="Session.cpp">
       <Filter>소스 파일\network\session</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>소스 파일\timer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

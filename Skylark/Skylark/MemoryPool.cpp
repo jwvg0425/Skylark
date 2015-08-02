@@ -33,7 +33,7 @@ void skylark::SmallSizeMemoryPool::push(MemAllocInfo* ptr)
 	InterlockedDecrement(&allocCount);
 }
 
-skylark::MemoryPool* skylark::MemoryPool::GetInstance()
+skylark::MemoryPool* skylark::MemoryPool::getInstance()
 {
 	if (pool == nullptr)
 	{
