@@ -17,7 +17,7 @@ namespace skylark
 			thread->ioJob();
 			TLS::timer->doTimerJob();
 			thread->sendJob();
-			thread->customJob();
+			thread->job();
 		}
 	}
 }
@@ -27,20 +27,8 @@ void skylark::IOThread::ioJob()
 	port->job();
 }
 
-void skylark::IOThread::customJob()
-{
-	if (customFunc != nullptr)
-		customFunc();
-}
-
-skylark::IOThread::IOThread(int id_, CompletionPort* port_, std::function<void()> customFunc_) :
-	id(id_), port(port_), customFunc(customFunc_), t(ioThreadFunc, this)
-{
-
-}
-
 skylark::IOThread::IOThread(int id_, CompletionPort * port_)
-	:id(id_), port(port_), customFunc(nullptr), t(ioThreadFunc, this)
+	:id(id_), port(port_), t(ioThreadFunc, this)
 {
 }
 
@@ -67,6 +55,10 @@ void skylark::IOThread::init()
 	TLS::sendRequestSessionList = new std::deque<Session*>();
 	TLS::timer = new Timer();
 	TLS::tickCount = GetTickCount64();
+}
+
+void skylark::IOThread::job()
+{
 }
 
 int skylark::IOThread::wait()
