@@ -2,6 +2,7 @@
 #include "CompletionPort.h"
 #include "Socket.h"
 #include "Exception.h"
+#include "Context.h"
 
 
 //auto WSASStartup
@@ -124,5 +125,133 @@ namespace skylark
 	bool Socket::listen()
 	{
 		return SOCKET_ERROR != ::listen(socket, SOMAXCONN);
+	}
+	bool Socket::disconnectEx(Context * context)
+	{
+		Overlapped* overlapped = new Overlapped(context);
+
+		if (FALSE == disconnectEx_(socket, (LPOVERLAPPED)overlapped, TF_REUSE_SOCKET, 0))
+		{
+			if (WSAGetLastError() != WSA_IO_PENDING)
+			{
+				delete overlapped;
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+	bool Socket::acceptEx(Socket * listenSocket, Context * context)
+	{
+		DWORD bytes = 0;
+		Overlapped* overlapped = new Overlapped(context);
+
+		if (FALSE == acceptEx_(listenSocket->socket, socket, acceptBuf, 0,
+			sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, &bytes, (LPOVERLAPPED)overlapped))
+		{
+			if (WSAGetLastError() != WSA_IO_PENDING)
+			{
+				delete overlapped;
+
+				return false;
+			}
+		}
+		return true;
+	}
+	bool Socket::connectEx(const std::string & addr, std::uint16_t port, Context * context)
+	{
+		SOCKADDR_IN serverSockAddr = { 0, };
+
+		serverSockAddr.sin_port = htons(port);
+		serverSockAddr.sin_family = AF_INET;
+		serverSockAddr.sin_addr.s_addr = inet_addr(addr.c_str());
+
+		Overlapped* overlapped = new Overlapped(context);
+
+		if (FALSE == connectEx_(socket, (sockaddr*)&serverSockAddr, sizeof(SOCKADDR_IN),
+			nullptr, 0, nullptr, (LPOVERLAPPED)overlapped))
+		{
+			if (WSAGetLastError() != WSA_IO_PENDING)
+			{
+				delete overlapped;
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+	bool Socket::recv(Context * context, WSABUF & buf)
+	{
+		DWORD recvBytes = 0;
+		DWORD flags = 0;
+
+		Overlapped* overlapped = new skylark::Overlapped(context);
+		if (SOCKET_ERROR == WSARecv(socket, &buf, 1, &recvBytes, &flags, (LPOVERLAPPED)overlapped, nullptr))
+		{
+			if (WSAGetLastError() != WSA_IO_PENDING)
+			{
+				delete overlapped;
+				return false;
+			}
+		}
+
+		return true;
+	}
+	bool Socket::recvFrom(UdpContext * context, WSABUF & buf)
+	{
+		DWORD recvBytes = 0;
+		DWORD flags = 0;
+		int size = sizeof(SOCKADDR_IN);
+
+		Overlapped* overlapped = new skylark::Overlapped(context);
+		if (SOCKET_ERROR == WSARecvFrom(socket, &buf, 1, &recvBytes, &flags, (sockaddr*)&context->address, &size, (LPOVERLAPPED)overlapped, nullptr))
+		{
+			if (WSAGetLastError() != WSA_IO_PENDING)
+			{
+				delete overlapped;
+				return false;
+			}
+		}
+
+		return true;
+	}
+	bool Socket::sendTo(UdpContext * context, WSABUF & buf)
+	{
+		Overlapped* overlapped = new Overlapped(context);
+		DWORD sendbytes = 0;
+		DWORD flags = 0;
+		int size = sizeof(SOCKADDR_IN);
+
+		if (SOCKET_ERROR == WSASendTo(socket, &buf, 1, &sendbytes, flags, (sockaddr*)&context->address, size, (LPOVERLAPPED)overlapped, nullptr))
+		{
+			if (WSAGetLastError() != WSA_IO_PENDING)
+			{
+				delete overlapped;
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+	bool Socket::send(Context * context, WSABUF & buf)
+	{
+		Overlapped* overlapped = new Overlapped(context);
+		DWORD sendbytes = 0;
+		DWORD flags = 0;
+
+		if (SOCKET_ERROR == WSASend(socket, &buf, 1, &sendbytes, flags, (LPOVERLAPPED)overlapped, nullptr))
+		{
+			if (WSAGetLastError() != WSA_IO_PENDING)
+			{
+				delete overlapped;
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 }
