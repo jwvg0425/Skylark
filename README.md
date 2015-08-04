@@ -4,6 +4,9 @@ Simple IOCP GameServer Framework
 ## Build Requirements
  - Windows 7+ & Visual Studio 2015 RC +
 
+## Contribution
+
+when you find bug or good idea about this framework, just pull request or create issue.
 
 >한국어
 
