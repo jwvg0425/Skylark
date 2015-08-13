@@ -90,7 +90,7 @@ namespace skylark
 	struct DisconnectContext : Context
 	{
 		DisconnectContext(Session* session_, int reason_)
-			:session(session), reason(reason_) {}
+			:session(session_), reason(reason_) {}
 		~DisconnectContext() override = default;
 
 		bool onComplete(int transferred, int key) override;

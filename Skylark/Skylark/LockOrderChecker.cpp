@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Exception.h"
 #include "LockOrderChecker.h"
+#include "Lock.h"
 
 skylark::LockOrderChecker::LockOrderChecker(int tid)
 	:workerThreadId(tid), stackTopPos(0)
@@ -16,7 +17,7 @@ void skylark::LockOrderChecker::push(Lock * lock)
 	if (stackTopPos > 0)
 	{
 		//order check
-		CRASH_ASSERT(lockStack[stackTopPos-1] < lock);
+		CRASH_ASSERT((*lockStack[stackTopPos-1]) > (*lock));
 	}
 
 	lockStack[stackTopPos++] = lock;

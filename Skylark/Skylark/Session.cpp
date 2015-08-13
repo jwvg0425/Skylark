@@ -6,7 +6,7 @@
 #include "Exception.h"
 
 skylark::Session::Session(CompletionPort * port_, std::size_t sendBufSize, std::size_t recvBufSize)
-	:socket(new Socket(ConnectType::TCP)), port(port_), sendBuffer(sendBufSize), recvBuffer(recvBufSize), sendLock(Lock::Order::LUGGAGE_CLASS), connected(false)
+	:socket(new Socket(ConnectType::TCP)), port(port_), sendBuffer(sendBufSize), recvBuffer(recvBufSize), sendLock(Lock::Order::LUGGAGE_CLASS), connected(false), refCount(0)
 {
 }
 
@@ -15,6 +15,18 @@ skylark::Session::~Session()
 	delete socket;
 }
 
+bool skylark::Session::disconnect(Context * context)
+{
+	// already disconnected
+	if (false == connected.exchange(false))
+		return true;
+
+	return socket->disconnectEx(context);
+}
+bool skylark::Session::accept(Socket * listen, Context * context)
+{
+	return socket->acceptEx(listen, context);
+}
 bool skylark::Session::onDisconnect(int reason)
 {
 	return true;
@@ -130,6 +142,15 @@ bool skylark::Session::recvCompletion(DWORD transferred)
 	recvBuffer.commit(transferred);
 
 	return onRead();
+}
+
+bool skylark::Session::disconnectCompletion(int reason)
+{
+	bool res = onDisconnect(reason);
+
+	releaseRef();
+	
+	return res;
 }
 
 void skylark::Session::addRef()

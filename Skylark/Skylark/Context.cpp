@@ -38,7 +38,7 @@ bool skylark::SendContext::onComplete(int transferred, int key)
 
 bool skylark::DisconnectContext::onComplete(int transferred, int key)
 {
-	return false;
+	return session->disconnectCompletion(reason);
 }
 
 bool skylark::RecvContext::onFailure()

@@ -6,6 +6,7 @@ namespace skylark
 {
 	class CompletionPort;
 	class Socket;
+	struct Context;
 
 	class Session
 	{
@@ -13,21 +14,8 @@ namespace skylark
 		Session(CompletionPort* port, std::size_t sendBufSize, std::size_t recvBufSize);
 		virtual ~Session();
 
-		template<typename C>
-		bool disconnect(C* context)
-		{
-			static_assert(std::is_base_of<Context, C>::value, "context must be Context's derived type.");
-
-			return socket->disconnectEx(context);
-		}
-
-		template<typename C>
-		bool accept(Socket* listen, C* context)
-		{
-			static_assert(std::is_base_of<Context ,C>::value, "context must be Context's derived type.");
-
-			return socket->acceptEx(listen, context);
-		}
+		bool disconnect(Context* context);
+		bool accept(Socket* listen, Context* context);
 
 		bool preRecv();
 		bool recv();
@@ -40,6 +28,7 @@ namespace skylark
 		bool acceptCompletion(Socket* listen);
 		bool sendCompletion(DWORD transferred);
 		bool recvCompletion(DWORD transferred);
+		bool disconnectCompletion(int reason);
 
 		void addRef();
 		void releaseRef();
