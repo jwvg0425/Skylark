@@ -44,7 +44,7 @@ void skylark::CompletionPort::job() const
 		context->onFailure();
 	}
 
-	delete overlapped;
+	delete real;
 }
 
 bool skylark::CompletionPort::bind(SOCKET socket)
