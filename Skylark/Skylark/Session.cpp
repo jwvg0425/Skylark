@@ -203,6 +203,7 @@ bool skylark::Session::flushSend()
 
 	Guard guard(sendLock, true);
 
+	
 	if (0 == sendBuffer.getContiguiousBytes())
 	{
 		if (0 == sendPendingCount)

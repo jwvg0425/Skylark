@@ -11,6 +11,7 @@ namespace skylark
 #if _MSC_VER >= 1900
 		extern thread_local LockOrderChecker* lockOrderChecker;
 		extern thread_local std::deque<Session*>* sendRequestSessionList;
+		extern thread_local std::deque<Session*>* sendRequestFailedList;
 		extern thread_local int64_t tickCount;
 		extern thread_local Timer* timer;
 #elif _MSC_VER <= 1800

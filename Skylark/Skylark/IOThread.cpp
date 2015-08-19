@@ -41,11 +41,18 @@ void skylark::IOThread::sendJob()
 	while (!TLS::sendRequestSessionList->empty())
 	{
 		auto& session = TLS::sendRequestSessionList->front();
+		TLS::sendRequestSessionList->pop_front();
 
-		if (session->flushSend())
+		if (!session->flushSend())
 		{
-			TLS::sendRequestSessionList->pop_front();
+			TLS::sendRequestFailedList->push_front(session);
 		}
+
+		std::deque<Session*>* tmp;
+
+		tmp = TLS::sendRequestSessionList;
+		TLS::sendRequestSessionList = TLS::sendRequestFailedList;
+		TLS::sendRequestFailedList = tmp;
 	}
 }
 
@@ -53,6 +60,7 @@ void skylark::IOThread::init()
 {
 	TLS::lockOrderChecker = new LockOrderChecker(id);
 	TLS::sendRequestSessionList = new std::deque<Session*>();
+	TLS::sendRequestFailedList = new std::deque<Session*>();
 	TLS::timer = new Timer();
 	TLS::tickCount = GetTickCount64();
 }
