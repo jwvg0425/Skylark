@@ -26,6 +26,20 @@ namespace skylark
 	class Session;
 	class Socket;
 
+	struct FunctionContext : Context
+	{
+		FunctionContext(std::function<bool()> func_, std::function<bool()> failFunc_ = nullptr)
+			: func(func_), failFunc(failFunc_) {}
+		~FunctionContext() override = default;
+
+		bool onComplete(int transferred, int key) override;
+
+		bool onFailure() override;
+
+		std::function<bool()> func = nullptr;
+		std::function<bool()> failFunc = nullptr;
+	};
+
 	struct AcceptContext : Context
 	{
 		AcceptContext(Session* session_, Socket* listen_) : session(session_), listen(listen_) {}
@@ -33,10 +47,7 @@ namespace skylark
 
 		bool onComplete(int transferred, int key) override;
 
-		bool onFailure() override
-		{
-			return false;
-		}
+		bool onFailure() override;
 
 		Session* session;
 		Socket* listen;
@@ -50,10 +61,7 @@ namespace skylark
 
 		bool onComplete(int transferred, int key) override;
 		
-		bool onFailure() override
-		{
-			return false;
-		}
+		bool onFailure() override;
 
 		Session* session;
 		WSABUF wsabuf;
@@ -97,7 +105,7 @@ namespace skylark
 
 		bool onFailure() override
 		{
-			return false;
+			return true;
 		}
 
 		Session* session;

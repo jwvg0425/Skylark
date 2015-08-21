@@ -8,9 +8,19 @@ bool skylark::AcceptContext::onComplete(int transferred, int key)
 	return session->acceptCompletion(listen);
 }
 
+bool skylark::AcceptContext::onFailure()
+{
+	return true;
+}
+
 bool skylark::PreRecvContext::onComplete(int transferred, int key)
 {
 	return session->recv();
+}
+
+bool skylark::PreRecvContext::onFailure()
+{
+	return true;
 }
 
 bool skylark::RecvContext::onComplete(int transferred, int key)
@@ -71,4 +81,17 @@ skylark::UdpContext::UdpContext(SOCKADDR_IN address_)
 	:address(address_)
 {
 
+}
+
+bool skylark::FunctionContext::onComplete(int transferred, int key)
+{
+	return func();
+}
+
+bool skylark::FunctionContext::onFailure()
+{
+	if (failFunc == nullptr)
+		return true;
+
+	return failFunc();
 }
