@@ -92,9 +92,6 @@
     <ClInclude Include="ObjectPool.h">
       <Filter>소스 파일\memory</Filter>
     </ClInclude>
-    <ClInclude Include="PacketHandler.h">
-      <Filter>소스 파일\network\packet</Filter>
-    </ClInclude>
     <ClInclude Include="Session.h">
       <Filter>소스 파일\network\session</Filter>
     </ClInclude>
@@ -109,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="MPL.h">
       <Filter>소스 파일\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="SessionPacketHandler.h">
+      <Filter>소스 파일\network\packet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

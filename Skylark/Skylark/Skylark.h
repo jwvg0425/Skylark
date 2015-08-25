@@ -16,6 +16,6 @@
 #include "MemoryPool.h"
 #include "ObjectPool.h"
 
-#include "PacketHandler.h"
+#include "SessionPacketHandler.h"
 
 #include "Timer.h"
