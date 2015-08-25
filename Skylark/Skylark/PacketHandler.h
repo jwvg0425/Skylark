@@ -7,14 +7,14 @@ namespace skylark
 {
 
 //for session
-template <typename Header, int MAX_HANDLER_SIZE>
-class SessionPacketHandler
+template <typename Header, typename User, int MAX_HANDLER_SIZE>
+class PacketHandler
 {
 public:
 	using Selector = std::function<int(Header)>;
 
-	SessionPacketHandler(Session* session_)
-		:session(session_)
+	PacketHandler(User* user_)
+		:user(user_)
 	{
 		for (int i = 0; i < MAX_HANDLER_SIZE; i++)
 		{
@@ -22,26 +22,26 @@ public:
 		}
 	}
 
-	~SessionPacketHandler() = default;
+	~PacketHandler() = default;
 
 	void registerSelector(Selector selector_)
 	{
 		selector = selector_;
 	}
 
-	template<typename Packet>
-	void registerHandler(int type, std::function<void(const Packet&)> handler)
+	template<typename Enum, typename Packet>
+	void registerHandler(Enum type, void (User::*handler)(const Packet&))
 	{
-		handlers[type] = [this, handler]() -> bool
+		handlers[static_cast<int>(type)] = [this, handler]() -> bool
 		{
 			Packet p;
 
-			if (!session->parsePacket(p))
+			if (!user->parsePacket(p))
 			{
 				return false;
 			}
 
-			handler(p);
+			(user->*handler)(p);
 
 			return true;
 		};
@@ -69,7 +69,7 @@ public:
 	}
 
 private:
-	Session* session;
+	User* user;
 	Selector selector;
 	std::function<bool()> handlers[MAX_HANDLER_SIZE];
 
