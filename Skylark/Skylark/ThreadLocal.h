@@ -17,6 +17,7 @@ namespace skylark
 #elif _MSC_VER <= 1800
 		extern __declspec(thread) LockOrderChecker* lockOrderChecker;
 		extern __declspec(thread) std::deque<Session*>* sendRequestSessionList;
+		extern __declspec(thread) std::deque<Session*>* sendRequestFailedList;
 		extern __declspec(thread) int64_t tickCount;
 		extern __declspec(thread) Timer* timer;
 #endif

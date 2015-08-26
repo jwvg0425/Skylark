@@ -14,6 +14,7 @@ thread_local skylark::Timer* skylark::TLS::timer = nullptr;
 #elif MSC_VER <= 1800
 __declspec(thread) skylark::LockOrderChecker* skylark::TLS::lockOrderChecker = nullptr;
 __declspec(thread) std::deque<skylark::Session*>* skylark::TLS::sendRequestSessionList = nullptr;
+__declspec(thread) std::deque<skylark::Session*>* skylark::TLS::sendRequestFailedList = nullptr;
 __declspec(thread) int64_t tickCount;
 __declspec(thread) Timer* timer = nullptr;
 #endif
