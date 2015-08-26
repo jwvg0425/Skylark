@@ -5,7 +5,6 @@
 
 namespace skylark
 {
-
 	template<class T>
 	class ObjectPool
 	{

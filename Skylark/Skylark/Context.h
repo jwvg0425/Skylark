@@ -1,4 +1,6 @@
 #pragma once
+#include "ObjectPool.h"
+
 
 namespace skylark
 {
@@ -13,7 +15,7 @@ namespace skylark
 		virtual bool onFailure() = 0;
 	};
 
-	struct UdpContext : Context
+	struct UdpContext final : Context, ObjectPool<UdpContext>
 	{
 		UdpContext();
 		UdpContext(SOCKADDR_IN address_);
@@ -26,7 +28,7 @@ namespace skylark
 	class Session;
 	class Socket;
 
-	struct FunctionContext : Context
+	struct FunctionContext final : Context, ObjectPool<FunctionContext>
 	{
 		FunctionContext(std::function<bool()> func_, std::function<bool()> failFunc_ = nullptr)
 			: func(func_), failFunc(failFunc_) {}
@@ -40,7 +42,7 @@ namespace skylark
 		std::function<bool()> failFunc = nullptr;
 	};
 
-	struct AcceptContext : Context
+	struct AcceptContext final : Context, ObjectPool<AcceptContext>
 	{
 		AcceptContext(Session* session_, Socket* listen_) : session(session_), listen(listen_) {}
 		~AcceptContext() override = default;
@@ -53,7 +55,7 @@ namespace skylark
 		Socket* listen;
 	};
 
-	struct PreRecvContext : Context
+	struct PreRecvContext final : Context, ObjectPool<PreRecvContext>
 	{
 		PreRecvContext(Session* session_)
 			:session(session_) {}
@@ -67,7 +69,7 @@ namespace skylark
 		WSABUF wsabuf;
 	};
 
-	struct RecvContext : Context
+	struct RecvContext final : Context, ObjectPool<RecvContext>
 	{
 		RecvContext(Session* session_)
 			:session(session_) {}
@@ -81,7 +83,7 @@ namespace skylark
 		WSABUF wsabuf;
 	};
 
-	struct SendContext : Context
+	struct SendContext final : Context, ObjectPool<SendContext>
 	{
 		SendContext(Session* session_)
 			:session(session_) {}
@@ -95,7 +97,7 @@ namespace skylark
 		WSABUF wsabuf;
 	};
 
-	struct DisconnectContext : Context
+	struct DisconnectContext final : Context, ObjectPool<DisconnectContext>
 	{
 		DisconnectContext(Session* session_, int reason_)
 			:session(session_), reason(reason_) {}
