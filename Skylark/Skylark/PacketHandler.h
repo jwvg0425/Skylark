@@ -6,33 +6,37 @@
 namespace skylark
 {
 
+template<typename T>
+struct InitHandler
+{
+public:
+	InitHandler()
+	{
+		T::initHandler();	}
+
+	~InitHandler() = default;
+
+private:
+};
+
 //for session
 template <typename Header, typename User, int MAX_HANDLER_SIZE>
 class PacketHandler
 {
 public:
-	using Selector = std::function<int(Header)>;
-
-	PacketHandler(User* user_)
-		:user(user_)
+	PacketHandler()
 	{
-		for (int i = 0; i < MAX_HANDLER_SIZE; i++)
-		{
-			handlers[i] = nullptr;
-		}
+		static InitHandler<User> init;
 	}
 
-	~PacketHandler() = default;
+	virtual ~PacketHandler() = default;
 
-	void registerSelector(Selector selector_)
-	{
-		selector = selector_;
-	}
+	virtual int select(Header header) = 0;
 
 	template<typename Enum, typename Packet>
-	void registerHandler(Enum type, void (User::*handler)(const Packet&))
+	static void registerHandler(Enum type, void (User::*handler)(const Packet&))
 	{
-		handlers[static_cast<int>(type)] = [this, handler]() -> bool
+		handlers[static_cast<int>(type)] = [handler](User* user) -> bool
 		{
 			Packet p;
 
@@ -47,32 +51,33 @@ public:
 		};
 	}
 
-	void packetHandle(Session* session)
+	void packetHandle(User* user)
 	{
 		while (true)
 		{
 			Header header;
 
-			if (!session->peekPacket(header))
+			if (!user->peekPacket(header))
 				return;
 
-			int idx = selector(header);
-			
+			int idx = select(header);
+
 			if (idx <0 || idx > MAX_HANDLER_SIZE)
 				return;
 
 			CRASH_ASSERT(handlers[idx] != nullptr);
 
-			if (!handlers[idx]())
+			if (!handlers[idx](user))
 				return;
 		}
 	}
 
 private:
-	User* user;
-	Selector selector;
-	std::function<bool()> handlers[MAX_HANDLER_SIZE];
-
+	static std::function<bool(User*)> handlers[MAX_HANDLER_SIZE];
 };
+
+
+template <typename Header, typename User, int MAX_HANDLER_SIZE>
+std::function<bool(User*)> PacketHandler<Header, User, MAX_HANDLER_SIZE>::handlers[MAX_HANDLER_SIZE] = { nullptr, };
 
 }
