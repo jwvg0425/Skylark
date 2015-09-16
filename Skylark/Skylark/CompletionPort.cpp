@@ -66,6 +66,13 @@ bool skylark::CompletionPort::take(Context * context, int key)
 	return PostQueuedCompletionStatus(completionPort, 0, (ULONG_PTR)key, (LPOVERLAPPED)overlapped) == TRUE;
 }
 
+bool skylark::CompletionPort::doLambda(std::function<bool()> func, std::function<bool()> failedFunc)
+{
+	FunctionContext* context = new FunctionContext(func, failedFunc);
+
+	return take(context, 0);
+}
+
 bool skylark::postContext(CompletionPort * port, Context * context, int key)
 {
 	return port->take(context, key);

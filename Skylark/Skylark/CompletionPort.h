@@ -15,6 +15,8 @@ namespace skylark
 		bool bind(SOCKET socket);
 
 		bool take(Context* context, int key);
+
+		bool doLambda(std::function<bool()> func, std::function<bool()> failedFunc = nullptr);
 	private:
 		HANDLE completionPort;
 		int timeout;
