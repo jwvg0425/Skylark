@@ -62,6 +62,7 @@ void skylark::IOThread::init()
 	TLS::sendRequestSessionList = new std::deque<Session*>();
 	TLS::sendRequestFailedList = new std::deque<Session*>();
 	TLS::timer = new Timer();
+	TLS::threadId = id;
 	TLS::tickCount = GetTickCount64();
 }
 
