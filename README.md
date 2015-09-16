@@ -1,21 +1,14 @@
-# Skylark
-Simple IOCP GameServer Framework
-
-## Build Requirements
- - Windows 7+ & Visual Studio 2015 RC +
-
-## Contribution
-
-when you find bug or good idea about this framework, just pull request or create issue.
-
->한국어
+[English Version](https://github.com/BirdRider/Skylark/blob/master/README_English.md)  
 
 # Skylark
 
 간단한 IOCP 게임서버 프레임 워크
 
 ## 빌드 요구사항
- - Windows 7+ & Visual Studio 2015 RC +
+ - Windows 7+ & Visual Studio 2013+ (VS 2015 권장)
+
+## 사용법
+
 
 ## 기여
 
