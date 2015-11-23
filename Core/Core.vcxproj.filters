@@ -51,6 +51,9 @@
     <ClInclude Include="CircularBuffer.h">
       <Filter>소스 파일\util</Filter>
     </ClInclude>
+    <ClInclude Include="Context.h">
+      <Filter>소스 파일\util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -72,6 +75,9 @@
       <Filter>소스 파일\exception</Filter>
     </ClCompile>
     <ClCompile Include="CircularBuffer.cpp">
+      <Filter>소스 파일\util</Filter>
+    </ClCompile>
+    <ClCompile Include="Context.cpp">
       <Filter>소스 파일\util</Filter>
     </ClCompile>
   </ItemGroup>
