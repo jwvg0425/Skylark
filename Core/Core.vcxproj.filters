@@ -19,6 +19,9 @@
     <Filter Include="소스 파일\util">
       <UniqueIdentifier>{a5533315-e0dd-4748-8efd-01004aa9b68f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\exception">
+      <UniqueIdentifier>{57b4ab05-bfc3-4245-9656-139f4d84b586}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -33,6 +36,18 @@
     <ClInclude Include="Thread.h">
       <Filter>소스 파일\thread</Filter>
     </ClInclude>
+    <ClInclude Include="LockOrderChecker.h">
+      <Filter>소스 파일\util</Filter>
+    </ClInclude>
+    <ClInclude Include="SpinLock.h">
+      <Filter>소스 파일\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Lock.h">
+      <Filter>소스 파일\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception.h">
+      <Filter>소스 파일\exception</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -40,6 +55,18 @@
     </ClCompile>
     <ClCompile Include="Thread.cpp">
       <Filter>소스 파일\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="LockOrderChecker.cpp">
+      <Filter>소스 파일\util</Filter>
+    </ClCompile>
+    <ClCompile Include="SpinLock.cpp">
+      <Filter>소스 파일\util</Filter>
+    </ClCompile>
+    <ClCompile Include="Lock.cpp">
+      <Filter>소스 파일\util</Filter>
+    </ClCompile>
+    <ClCompile Include="Exception.cpp">
+      <Filter>소스 파일\exception</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

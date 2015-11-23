@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Thread.h"
+#include "LockOrderChecker.h"
 
 std::atomic<int> skylark::Thread::mIdMaker = 0;
 thread_local skylark::Thread* thisThread = nullptr;
@@ -14,7 +15,7 @@ void threadFunc(skylark::Thread* thread)
 }
 
 skylark::Thread::Thread()
-	: mId(mIdMaker++), mThread(threadFunc, this)
+	: mId(mIdMaker++), mThread(threadFunc, this), mLockOrderChecker(new LockOrderChecker())
 {
 }
 
