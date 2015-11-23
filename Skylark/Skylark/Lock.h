@@ -66,7 +66,7 @@ namespace skylark
 		}
 
 	private:
-		Lock lock;
+		Lock& lock;
 		bool exclusive;
 	};
 
