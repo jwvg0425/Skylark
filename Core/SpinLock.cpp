@@ -12,7 +12,7 @@ void skylark::SpinLock::enterWriteLock()
 		while (mLockFlag & WRITE_MASK)
 			YieldProcessor();
 
-		if ((InterlockedAdd(&mLockFlag, WRITE_FLAG) & WRITE_MASK) == WRITE_FLAG)
+		if (((mLockFlag += WRITE_FLAG) & WRITE_MASK) == WRITE_FLAG)
 		{
 			while (mLockFlag & READ_MASK)
 				YieldProcessor();
@@ -20,13 +20,13 @@ void skylark::SpinLock::enterWriteLock()
 			return;
 		}
 
-		InterlockedAdd(&mLockFlag, -WRITE_FLAG);
+		mLockFlag -= WRITE_FLAG;
 	}
 }
 
 void skylark::SpinLock::leaveWriteLock()
 {
-	InterlockedAdd(&mLockFlag, -WRITE_FLAG);
+	mLockFlag -= WRITE_FLAG;
 
 	thisThread->getLockOrderChecker()->pop(this);
 }
@@ -40,18 +40,18 @@ void skylark::SpinLock::enterReadLock()
 		while (mLockFlag & WRITE_MASK)
 			YieldProcessor();
 
-		if ((InterlockedIncrement(&mLockFlag) & WRITE_MASK) == 0)
+		if ((++mLockFlag & WRITE_MASK) == 0)
 		{
 			return;
 		}
 
-		InterlockedDecrement(&mLockFlag);
+		--mLockFlag;
 	}
 }
 
 void skylark::SpinLock::leaveReadLock()
 {
-	InterlockedDecrement(&mLockFlag);
+	--mLockFlag;
 
 	thisThread->getLockOrderChecker()->pop(this);
 }

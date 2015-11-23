@@ -25,7 +25,7 @@ private:
 		READ_MASK = 0x000FFFFF
 	};
 
-	volatile long mLockFlag;
+	std::atomic<long> mLockFlag;
 };
 
 }
