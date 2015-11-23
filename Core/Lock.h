@@ -25,4 +25,30 @@ private:
 	const Order mOrder;
 };
 
+template <typename LType>
+class Guard
+{
+public:
+	Guard(LType& lock, bool exclusive)
+		: mLock(lock), mExclusive(exclusive)
+	{
+		if (mExclusive)
+			mLock.enterWriteLock();
+		else
+			mLock.enterReadLock();
+	}
+
+	~Guard()
+	{
+		if (mExclusive)
+			mLock.leaveWriteLock();
+		else
+			mLock.leaveReadLock();
+	}
+
+private:
+	LType& mLock;
+	bool mExclusive;
+};
+
 }
