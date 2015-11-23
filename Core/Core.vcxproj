@@ -130,6 +130,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CircularBuffer.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Lock.h" />
     <ClInclude Include="LockOrderChecker.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Thread.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CircularBuffer.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="Lock.cpp" />
     <ClCompile Include="LockOrderChecker.cpp" />
