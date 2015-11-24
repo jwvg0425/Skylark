@@ -22,6 +22,9 @@
     <Filter Include="소스 파일\exception">
       <UniqueIdentifier>{57b4ab05-bfc3-4245-9656-139f4d84b586}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\network">
+      <UniqueIdentifier>{6855e2c1-3791-4e7c-a225-3186feb58908}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -54,6 +57,12 @@
     <ClInclude Include="Context.h">
       <Filter>소스 파일\util</Filter>
     </ClInclude>
+    <ClInclude Include="Socket.h">
+      <Filter>소스 파일\network</Filter>
+    </ClInclude>
+    <ClInclude Include="CompletionPort.h">
+      <Filter>소스 파일\thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -79,6 +88,12 @@
     </ClCompile>
     <ClCompile Include="Context.cpp">
       <Filter>소스 파일\util</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket.cpp">
+      <Filter>소스 파일\network</Filter>
+    </ClCompile>
+    <ClCompile Include="CompletionPort.cpp">
+      <Filter>소스 파일\thread</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

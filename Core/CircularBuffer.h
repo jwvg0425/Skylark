@@ -5,10 +5,10 @@ namespace skylark
 class CircularBuffer
 {
 public:
-	CircularBuffer(std::size_t capacity_) :
+	CircularBuffer(std::size_t capacity) :
 		mRegionBPointer(nullptr),
 		mRegionASize(0), mRegionBSize(0),
-		mCapacity(capacity_)
+		mCapacity(capacity)
 	{
 		mBuffer = new char[mCapacity];
 		mBufferEnd = mBuffer + mCapacity;

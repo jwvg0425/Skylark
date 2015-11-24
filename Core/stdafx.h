@@ -16,3 +16,9 @@
 
 #include <Windows.h>
 #include <cstdlib>
+
+#include <WinSock2.h>
+#include <MSWSock.h>
+
+#pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "DbgHelp.lib")
