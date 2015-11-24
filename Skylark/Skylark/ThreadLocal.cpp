@@ -18,5 +18,5 @@ __declspec(thread) std::deque<skylark::Session*>* skylark::TLS::sendRequestSessi
 __declspec(thread) std::deque<skylark::Session*>* skylark::TLS::sendRequestFailedList = nullptr;
 __declspec(thread) int64_t skylark::TLS::tickCount = 0;
 __declspec(thread) int skylark::TLS::threadId = -1;
-__declspec(thread) Timer* skylark::TLS::timer = nullptr;
+__declspec(thread) skylark::Timer* skylark::TLS::timer = nullptr;
 #endif
