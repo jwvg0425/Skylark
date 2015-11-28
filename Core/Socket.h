@@ -33,9 +33,9 @@ public:
 	bool bind(const std::string& addr, std::uint16_t port);
 	bool listen();
 
-	bool disconnectEx(Context* context);
-	bool acceptEx(Socket* listenSocket, Context* context);
-	bool connectEx(const std::string& addr, std::uint16_t port, Context* context);
+	bool disconnect(Context* context);
+	bool accept(Socket* listenSocket, Context* context);
+	bool connect(const std::string& addr, std::uint16_t port, Context* context);
 
 	bool recv(Context* context, WSABUF& buf);
 	bool send(Context* context, WSABUF& buf);

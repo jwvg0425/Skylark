@@ -126,7 +126,7 @@ bool Socket::listen()
 {
 	return SOCKET_ERROR != ::listen(socket, SOMAXCONN);
 }
-bool Socket::disconnectEx(Context * context)
+bool Socket::disconnect(Context * context)
 {
 	Overlapped* overlapped = new Overlapped(context);
 
@@ -142,7 +142,7 @@ bool Socket::disconnectEx(Context * context)
 
 	return true;
 }
-bool Socket::acceptEx(Socket * listenSocket, Context * context)
+bool Socket::accept(Socket * listenSocket, Context * context)
 {
 	DWORD bytes = 0;
 	Overlapped* overlapped = new Overlapped(context);
@@ -159,7 +159,7 @@ bool Socket::acceptEx(Socket * listenSocket, Context * context)
 	}
 	return true;
 }
-bool Socket::connectEx(const std::string & addr, std::uint16_t port, Context * context)
+bool Socket::connect(const std::string & addr, std::uint16_t port, Context * context)
 {
 	SOCKADDR_IN serverSockAddr = { 0, };
 
