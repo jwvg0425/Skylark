@@ -1,6 +1,6 @@
 [English Version](https://github.com/BirdRider/Skylark/blob/master/README_English.md)  
 
-![screenshot](title.png)
+![screenshot](https://github.com/BirdRider/Skylark/blob/master/title.jpg)
 
 간단한 IOCP 게임서버 프레임 워크
 
