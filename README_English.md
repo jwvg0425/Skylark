@@ -1,4 +1,4 @@
-![screenshot](title.png)
+![screenshot](https://github.com/BirdRider/Skylark/blob/master/title.jpg)
 
 Simple IOCP GameServer Framework
 
