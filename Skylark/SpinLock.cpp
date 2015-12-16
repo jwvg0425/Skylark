@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "SpinLock.h"
-#include "Thread.h"
-#include "LockOrderChecker.h"
 
 void skylark::SpinLock::enterWriteLock()
 {

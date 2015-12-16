@@ -1,4 +1,5 @@
 #pragma once
+#include "ObjectPool.h"
 
 namespace skylark
 {
@@ -10,7 +11,7 @@ struct Context
 	virtual bool onComplete(int transferred, int key) = 0;
 
 	//call when onComplete return false
-	virtual bool onFailure() = 0;
+	virtual void onFailure() {}
 };
 
 struct Overlapped

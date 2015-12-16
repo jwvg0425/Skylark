@@ -42,9 +42,6 @@
     <ClInclude Include="LockOrderChecker.h">
       <Filter>소스 파일\util</Filter>
     </ClInclude>
-    <ClInclude Include="SpinLock.h">
-      <Filter>소스 파일\util</Filter>
-    </ClInclude>
     <ClInclude Include="Lock.h">
       <Filter>소스 파일\util</Filter>
     </ClInclude>
@@ -63,6 +60,12 @@
     <ClInclude Include="CompletionPort.h">
       <Filter>소스 파일\thread</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>소스 파일\util</Filter>
+    </ClInclude>
+    <ClInclude Include="core.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -72,9 +75,6 @@
       <Filter>소스 파일\thread</Filter>
     </ClCompile>
     <ClCompile Include="LockOrderChecker.cpp">
-      <Filter>소스 파일\util</Filter>
-    </ClCompile>
-    <ClCompile Include="SpinLock.cpp">
       <Filter>소스 파일\util</Filter>
     </ClCompile>
     <ClCompile Include="Lock.cpp">
